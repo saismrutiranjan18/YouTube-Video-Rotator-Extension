@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Video Rotator",
+  "version": "1.0.0",
+  "description": "Rotate YouTube videos to any angle for comfortable viewing",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ]
+}
