@@ -1,9 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Video Rotator",
-  "version": "1.0.0",
+  "name": "YouTube Rotate Pro",
+  "version": "1.2.0",
   "description": "Rotate YouTube videos to any angle for comfortable viewing",
-  "permissions": [],
+  "permissions": ["storage", "activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
@@ -11,5 +14,6 @@
       "css": ["styles.css"],
       "run_at": "document_end"
     }
-  ]
+  ],
+  "options_page": "options.html"
 }

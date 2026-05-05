@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rotate Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 320px;
+      background: #0F0F0F;
+      color: #E5E2E1;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+    /* Glass panel */
+    .glass {
+      background: rgba(39, 39, 39, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Header */
+    .header {
+      background: #0F0F0F;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-brand span.logo-icon {
+      color: #FF0000;
+      font-size: 20px;
+    }
+
+    .header-brand h1 {
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 2px;
+    }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #666;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .icon-btn:hover { background: rgba(255,255,255,0.06); color: #ccc; }
+
+    /* Main */
+    main {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Section label */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2px;
+      margin-bottom: 8px;
+    }
+
+    .label-xs {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    /* Preset buttons */
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .preset-btn {
+      background: rgba(39,39,39,0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 14px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .preset-btn .icon { color: #666; font-size: 22px; transition: color 0.15s; }
+    .preset-btn .deg { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; color: #666; transition: color 0.15s; }
+
+    .preset-btn.active {
+      background: rgba(255,0,0,0.08);
+      border-color: rgba(255,0,0,0.3);
+    }
+
+    .preset-btn.active .icon { color: #FF0000; }
+    .preset-btn.active .deg { color: #fff; }
+
+    /* Precision control */
+    .precision-card {
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .precision-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .precision-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #e5e2e1;
+    }
+
+    .precision-title .material-symbols-outlined { font-size: 16px; color: #666; }
+
+    .degree-badge {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #FF0000;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #FF0000;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(255,0,0,0.5);
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 700;
+      color: #444;
+      padding: 0 2px;
+    }
+
+    /* Auto detect */
+    .auto-card {
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .auto-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .auto-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auto-icon-wrap .material-symbols-outlined { color: #FF0000; font-size: 18px; }
+
+    .auto-title { font-size: 12px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+    .auto-sub { font-size: 10px; color: #555; }
+
+    /* Toggle switch */
+    .toggle-wrap { cursor: pointer; }
+
+    .toggle-track {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      background: #FF0000;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .toggle-track.off { background: #444; }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .toggle-track.off .toggle-thumb { right: auto; left: 2px; }
+
+    /* Preview */
+    .preview-card {
+      position: relative;
+      height: 100px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111;
+      cursor: pointer;
+    }
+
+    .preview-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1a0000, #000);
+      opacity: 0.9;
+    }
+
+    .preview-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+
+    .preview-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .play-btn {
+      width: 36px;
+      height: 36px;
+      background: #FF0000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      transition: transform 0.15s;
+    }
+
+    .play-btn:hover { transform: scale(1.08); }
+    .play-btn .material-symbols-outlined { color: #fff; font-size: 20px; }
+
+    .preview-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 16px;
+      background: rgba(39,39,39,0.8);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .nav-item.active {
+      background: rgba(255,0,0,0.1);
+    }
+
+    .nav-item .material-symbols-outlined { font-size: 22px; color: #555; }
+    .nav-item.active .material-symbols-outlined { color: #fff; }
+    .nav-item .nav-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: #555; text-transform: uppercase; }
+    .nav-item.active .nav-label { color: #fff; }
+    .nav-item:hover .material-symbols-outlined { color: #aaa; }
+    .nav-item:hover .nav-label { color: #aaa; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="material-symbols-outlined logo-icon">screen_rotation</span>
+      <h1>Rotate Pro</h1>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" title="Help">
+        <span class="material-symbols-outlined">help_outline</span>
+      </button>
+      <button class="icon-btn" title="Settings" id="open-settings">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Quick Rotation -->
+    <section>
+      <div class="section-header">
+        <span class="label-xs">Quick Rotation</span>
+        <span class="label-xs" style="color:#444;">PRESETS</span>
+      </div>
+      <div class="preset-grid" id="preset-grid">
+        <button class="preset-btn" data-angle="90" onclick="selectPreset(this)">
+          <span class="material-symbols-outlined icon">rotate_90_degrees_cw</span>
+          <span class="deg">90°</span>
+        </button>
+        <button class="preset-btn active" data-angle="180" onclick="selectPreset(this)">
+          <span class="material-symbols-outlined icon">rotate_left</span>
+          <span class="deg">180°</span>
+        </button>
+        <button class="preset-btn" data-angle="270" onclick="selectPreset(this)">
+          <span class="material-symbols-outlined icon">rotate_90_degrees_ccw</span>
+          <span class="deg">270°</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Precision Control -->
+    <section class="glass precision-card">
+      <div class="precision-header">
+        <div class="precision-title">
+          <span class="material-symbols-outlined">tune</span>
+          Precision Control
+        </div>
+        <div class="degree-badge" id="degree-badge">180°</div>
+      </div>
+      <input type="range" min="0" max="360" value="180" id="rotation-slider" oninput="onSliderChange(this.value)"/>
+      <div class="range-labels">
+        <span>0°</span><span>90°</span><span>180°</span><span>270°</span><span>360°</span>
+      </div>
+    </section>
+
+    <!-- Auto Detect -->
+    <section class="glass auto-card">
+      <div class="auto-left">
+        <div class="auto-icon-wrap">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <div>
+          <div class="auto-title">Auto-detect landscape</div>
+          <div class="auto-sub">Optimized for video content</div>
+        </div>
+      </div>
+      <div class="toggle-wrap" onclick="toggleSwitch(this)">
+        <div class="toggle-track" id="toggle">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Preview -->
+    <section class="preview-card">
+      <div class="preview-bg"></div>
+      <div class="preview-gradient"></div>
+      <div class="preview-content">
+        <div class="play-btn">
+          <span class="material-symbols-outlined fill">play_arrow</span>
+        </div>
+        <span class="preview-label">Live Preview</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <div class="nav-item active">
+      <span class="material-symbols-outlined">crop_rotate</span>
+      <span class="nav-label">Quick Rotate</span>
+    </div>
+    <div class="nav-item" onclick="chrome.runtime.openOptionsPage()">
+      <span class="material-symbols-outlined">shortcut</span>
+      <span class="nav-label">Shortcuts</span>
+    </div>
+    <div class="nav-item" onclick="chrome.runtime.openOptionsPage()">
+      <span class="material-symbols-outlined">settings</span>
+      <span class="nav-label">Settings</span>
+    </div>
+  </nav>
+
+  <script>
+    let currentAngle = 180;
+
+    // On popup open, get saved angle
+    chrome.storage.local.get(['rotation'], (result) => {
+      if (result.rotation !== undefined) {
+        currentAngle = result.rotation;
+        document.getElementById('rotation-slider').value = currentAngle;
+        document.getElementById('degree-badge').textContent = currentAngle + '°';
+        highlightPreset(currentAngle);
+      }
+    });
+
+    function selectPreset(btn) {
+      const angle = parseInt(btn.dataset.angle);
+      currentAngle = angle;
+      document.getElementById('rotation-slider').value = angle;
+      document.getElementById('degree-badge').textContent = angle + '°';
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyRotation(angle);
+    }
+
+    function onSliderChange(val) {
+      currentAngle = parseInt(val);
+      document.getElementById('degree-badge').textContent = val + '°';
+      highlightPreset(currentAngle);
+      applyRotation(currentAngle);
+    }
+
+    function highlightPreset(angle) {
+      document.querySelectorAll('.preset-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.angle) === angle);
+      });
+    }
+
+    function applyRotation(angle) {
+      chrome.storage.local.set({ rotation: angle });
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs[0]) {
+          chrome.tabs.sendMessage(tabs[0].id, { action: 'rotate', angle: angle });
+        }
+      });
+    }
+
+    function toggleSwitch(wrap) {
+      const track = document.getElementById('toggle');
+      track.classList.toggle('off');
+      const isOn = !track.classList.contains('off');
+      chrome.storage.local.set({ autoDetect: isOn });
+    }
+
+    document.getElementById('open-settings').addEventListener('click', () => {
+      chrome.runtime.openOptionsPage();
+    });
+  </script>
+</body>
+</html>

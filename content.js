@@ -1,217 +1,350 @@
-// YouTube Video Rotator Extension
-(function() {
+// YouTube Rotate Pro — content.js
+(function () {
   'use strict';
 
   let currentRotation = 0;
-  let controlPanel = null;
-  let videoContainer = null;
+  let isFlippedH = false;
+  let isFlippedV = false;
+  let overlayPanel = null;
+  let isDragging = false;
+  let dragOffsetX = 0, dragOffsetY = 0;
 
-  // Wait for YouTube video player to load
-  function initialize() {
-    const checkInterval = setInterval(() => {
-      videoContainer = document.querySelector('.html5-video-player');
-      if (videoContainer) {
-        clearInterval(checkInterval);
-        createControlPanel();
-        observeVideoChanges();
+  // ─── Init ────────────────────────────────────────────────────────────────────
+
+  function init() {
+    const check = setInterval(() => {
+      const player = document.querySelector('.html5-video-player');
+      if (player) {
+        clearInterval(check);
+        loadSavedState();
+        injectOverlay();
+        observeNavigation();
       }
     }, 1000);
   }
 
-  // Create the rotation control panel
-  function createControlPanel() {
-    if (controlPanel) return;
+  function loadSavedState() {
+    chrome.storage.local.get(['rotation', 'flipH', 'flipV'], (result) => {
+      if (result.rotation) {
+        currentRotation = result.rotation;
+        applyTransform();
+      }
+      if (result.flipH) { isFlippedH = result.flipH; applyTransform(); }
+      if (result.flipV) { isFlippedV = result.flipV; applyTransform(); }
+    });
+  }
 
-    controlPanel = document.createElement('div');
-    controlPanel.id = 'yt-rotator-panel';
-    controlPanel.innerHTML = `
-      <div class="yt-rotator-header">
-        <span class="yt-rotator-title">🔄 Video Rotation</span>
-        <button class="yt-rotator-toggle" title="Toggle panel">−</button>
-      </div>
-      <div class="yt-rotator-content">
-        <div class="yt-rotator-quick">
-          <button class="yt-rotator-btn" data-angle="90">90°</button>
-          <button class="yt-rotator-btn" data-angle="180">180°</button>
-          <button class="yt-rotator-btn" data-angle="270">270°</button>
-          <button class="yt-rotator-btn yt-rotator-reset" data-angle="0">Reset</button>
-        </div>
-        <div class="yt-rotator-fine">
-          <label class="yt-rotator-label">
-            Fine Control: <span id="yt-rotator-value">0°</span>
-          </label>
-          <input 
-            type="range" 
-            id="yt-rotator-slider" 
-            min="0" 
-            max="360" 
-            value="0" 
-            class="yt-rotator-slider"
-          />
-        </div>
-        <div class="yt-rotator-flip">
-          <button class="yt-rotator-btn-small" id="yt-flip-h">Flip H</button>
-          <button class="yt-rotator-btn-small" id="yt-flip-v">Flip V</button>
+  // ─── Overlay UI ─────────────────────────────────────────────────────────────
+
+  function injectOverlay() {
+    if (document.getElementById('rp-overlay')) return;
+
+    // Inject Google Fonts into page
+    if (!document.getElementById('rp-fonts')) {
+      const link = document.createElement('link');
+      link.id = 'rp-fonts';
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap';
+      document.head.appendChild(link);
+    }
+
+    overlayPanel = document.createElement('div');
+    overlayPanel.id = 'rp-overlay';
+    overlayPanel.innerHTML = `
+      <div id="rp-bar">
+        <span id="rp-label">ROTATE PRO</span>
+        <div id="rp-controls">
+          <button class="rp-btn" id="rp-cw"     title="Rotate 90° CW">
+            <span class="rp-icon">rotate_90_degrees_cw</span>
+          </button>
+          <button class="rp-btn" id="rp-ccw"    title="Rotate 90° CCW">
+            <span class="rp-icon">rotate_90_degrees_ccw</span>
+          </button>
+          <button class="rp-btn" id="rp-flip-h" title="Flip Horizontal">
+            <span class="rp-icon">flip</span>
+          </button>
+          <button class="rp-btn" id="rp-reset"  title="Reset">
+            <span class="rp-icon">restart_alt</span>
+          </button>
+          <button class="rp-btn" id="rp-close"  title="Close">
+            <span class="rp-icon">close</span>
+          </button>
         </div>
       </div>
     `;
 
-    document.body.appendChild(controlPanel);
-    attachEventListeners();
-  }
+    document.body.appendChild(overlayPanel);
+    injectStyles();
+    bindOverlayEvents();
+    makeDraggable();
 
-  // Attach event listeners to controls
-  function attachEventListeners() {
-    // Quick rotation buttons
-    const quickBtns = controlPanel.querySelectorAll('.yt-rotator-btn');
-    quickBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const angle = parseInt(btn.dataset.angle);
-        setRotation(angle);
-        updateSlider(angle);
-      });
-    });
-
-    // Slider
-    const slider = document.getElementById('yt-rotator-slider');
-    slider.addEventListener('input', (e) => {
-      const angle = parseInt(e.target.value);
-      setRotation(angle);
-      updateValueDisplay(angle);
-    });
-
-    // Toggle panel
-    const toggleBtn = controlPanel.querySelector('.yt-rotator-toggle');
-    const content = controlPanel.querySelector('.yt-rotator-content');
-    toggleBtn.addEventListener('click', () => {
-      const isCollapsed = content.style.display === 'none';
-      content.style.display = isCollapsed ? 'block' : 'none';
-      toggleBtn.textContent = isCollapsed ? '−' : '+';
-    });
-
-    // Flip buttons
-    document.getElementById('yt-flip-h').addEventListener('click', flipHorizontal);
-    document.getElementById('yt-flip-v').addEventListener('click', flipVertical);
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', handleKeyboard);
-  }
-
-  // Set video rotation
-  function setRotation(angle) {
-    currentRotation = angle;
-    const video = document.querySelector('video');
-    
-    if (video) {
-      const transform = video.style.transform || '';
-      const otherTransforms = transform.split(' ').filter(t => !t.startsWith('rotate('));
-      const newTransform = [...otherTransforms, `rotate(${angle}deg)`].join(' ');
-      video.style.transform = newTransform;
-      video.style.transformOrigin = 'center center';
-    }
-  }
-
-  // Update slider position
-  function updateSlider(angle) {
-    const slider = document.getElementById('yt-rotator-slider');
-    if (slider) {
-      slider.value = angle;
-      updateValueDisplay(angle);
-    }
-  }
-
-  // Update value display
-  function updateValueDisplay(angle) {
-    const display = document.getElementById('yt-rotator-value');
-    if (display) {
-      display.textContent = `${angle}°`;
-    }
-  }
-
-  // Flip horizontal
-  let isFlippedH = false;
-  function flipHorizontal() {
-    const video = document.querySelector('video');
-    if (video) {
-      isFlippedH = !isFlippedH;
-      const transform = video.style.transform || '';
-      const otherTransforms = transform.split(' ').filter(t => !t.startsWith('scaleX('));
-      const newTransform = [...otherTransforms, `scaleX(${isFlippedH ? -1 : 1})`].join(' ');
-      video.style.transform = newTransform;
-    }
-  }
-
-  // Flip vertical
-  let isFlippedV = false;
-  function flipVertical() {
-    const video = document.querySelector('video');
-    if (video) {
-      isFlippedV = !isFlippedV;
-      const transform = video.style.transform || '';
-      const otherTransforms = transform.split(' ').filter(t => !t.startsWith('scaleY('));
-      const newTransform = [...otherTransforms, `scaleY(${isFlippedV ? -1 : 1})`].join(' ');
-      video.style.transform = newTransform;
-    }
-  }
-
-  // Keyboard shortcuts
-  function handleKeyboard(e) {
-    // Only activate when Ctrl/Cmd + Alt are pressed
-    if (!(e.ctrlKey || e.metaKey) || !e.altKey) return;
-
-    switch(e.key) {
-      case 'ArrowRight':
-        e.preventDefault();
-        currentRotation = (currentRotation + 90) % 360;
-        setRotation(currentRotation);
-        updateSlider(currentRotation);
-        break;
-      case 'ArrowLeft':
-        e.preventDefault();
-        currentRotation = (currentRotation - 90 + 360) % 360;
-        setRotation(currentRotation);
-        updateSlider(currentRotation);
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        currentRotation = (currentRotation + 1) % 360;
-        setRotation(currentRotation);
-        updateSlider(currentRotation);
-        break;
-      case 'ArrowDown':
-        e.preventDefault();
-        currentRotation = (currentRotation - 1 + 360) % 360;
-        setRotation(currentRotation);
-        updateSlider(currentRotation);
-        break;
-      case 'r':
-      case 'R':
-        e.preventDefault();
-        setRotation(0);
-        updateSlider(0);
-        break;
-    }
-  }
-
-  // Observe video changes (YouTube's SPA navigation)
-  function observeVideoChanges() {
-    const observer = new MutationObserver(() => {
-      const video = document.querySelector('video');
-      if (video && currentRotation !== 0) {
-        setRotation(currentRotation);
+    // Load position
+    chrome.storage.local.get(['overlayX', 'overlayY', 'position'], (r) => {
+      if (r.overlayX !== undefined && r.overlayY !== undefined) {
+        overlayPanel.style.left = r.overlayX + 'px';
+        overlayPanel.style.top  = r.overlayY + 'px';
+        overlayPanel.style.right = 'auto';
+      } else if (r.position === 'bottom-right') {
+        overlayPanel.style.bottom = '80px';
+        overlayPanel.style.top = 'auto';
+        overlayPanel.style.right = '16px';
+        overlayPanel.style.left = 'auto';
       }
     });
+  }
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
+  function injectStyles() {
+    if (document.getElementById('rp-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'rp-styles';
+    style.textContent = `
+      #rp-overlay {
+        position: fixed;
+        top: 80px;
+        right: 16px;
+        z-index: 9999;
+        user-select: none;
+      }
+
+      #rp-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(15, 15, 15, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 10px;
+        padding: 7px 10px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+        cursor: grab;
+      }
+
+      #rp-bar:active { cursor: grabbing; }
+
+      #rp-label {
+        color: #FF0000;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        font-family: 'Inter', sans-serif;
+        padding-right: 8px;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        margin-right: 2px;
+        white-space: nowrap;
+      }
+
+      #rp-controls {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+
+      .rp-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+        transition: background 0.15s, color 0.15s;
+      }
+
+      .rp-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+      .rp-btn:active { transform: scale(0.9); }
+
+      #rp-close:hover { background: rgba(255,0,0,0.15); color: #FF0000; }
+
+      .rp-icon {
+        font-family: 'Material Symbols Outlined';
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 17px;
+        line-height: 1;
+      }
+
+      /* Video smooth transform */
+      .html5-main-video {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transform-origin: center center !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function bindOverlayEvents() {
+    document.getElementById('rp-cw').addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentRotation = (currentRotation + 90) % 360;
+      applyTransform();
+      saveState();
+    });
+
+    document.getElementById('rp-ccw').addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentRotation = (currentRotation - 90 + 360) % 360;
+      applyTransform();
+      saveState();
+    });
+
+    document.getElementById('rp-flip-h').addEventListener('click', (e) => {
+      e.stopPropagation();
+      isFlippedH = !isFlippedH;
+      applyTransform();
+      saveState();
+    });
+
+    document.getElementById('rp-reset').addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentRotation = 0;
+      isFlippedH = false;
+      isFlippedV = false;
+      applyTransform();
+      saveState();
+    });
+
+    document.getElementById('rp-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (overlayPanel) {
+        overlayPanel.style.display = 'none';
+      }
     });
   }
 
-  // Initialize when page loads
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize);
-  } else {
-    initialize();
+  function makeDraggable() {
+    const bar = document.getElementById('rp-bar');
+
+    bar.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.rp-btn')) return;
+      isDragging = true;
+      const rect = overlayPanel.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
+      overlayPanel.style.right = 'auto';
+      overlayPanel.style.bottom = 'auto';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const x = e.clientX - dragOffsetX;
+      const y = e.clientY - dragOffsetY;
+      overlayPanel.style.left = x + 'px';
+      overlayPanel.style.top  = y + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        chrome.storage.local.set({
+          overlayX: parseInt(overlayPanel.style.left),
+          overlayY: parseInt(overlayPanel.style.top)
+        });
+      }
+    });
   }
+
+  // ─── Transform ───────────────────────────────────────────────────────────────
+
+  function applyTransform() {
+    const video = document.querySelector('video');
+    if (!video) return;
+
+    const scaleX = isFlippedH ? -1 : 1;
+    const scaleY = isFlippedV ? -1 : 1;
+    video.style.transform = `rotate(${currentRotation}deg) scaleX(${scaleX}) scaleY(${scaleY})`;
+    video.style.transformOrigin = 'center center';
+  }
+
+  function saveState() {
+    chrome.storage.local.set({
+      rotation: currentRotation,
+      flipH: isFlippedH,
+      flipV: isFlippedV
+    });
+  }
+
+  // ─── Message listener (from popup) ──────────────────────────────────────────
+
+  chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.action === 'rotate') {
+      currentRotation = msg.angle;
+      applyTransform();
+      // Re-show overlay if hidden
+      if (overlayPanel) overlayPanel.style.display = '';
+    }
+    if (msg.action === 'reset') {
+      currentRotation = 0;
+      isFlippedH = false;
+      isFlippedV = false;
+      applyTransform();
+    }
+  });
+
+  // ─── Keyboard shortcuts ──────────────────────────────────────────────────────
+
+  document.addEventListener('keydown', (e) => {
+    if (!e.altKey) return;
+
+    switch (e.key.toLowerCase()) {
+      case 'r':
+        e.preventDefault();
+        currentRotation = (currentRotation + 90) % 360;
+        applyTransform();
+        saveState();
+        break;
+      case 'h':
+        e.preventDefault();
+        isFlippedH = !isFlippedH;
+        applyTransform();
+        saveState();
+        break;
+      case 'v':
+        e.preventDefault();
+        isFlippedV = !isFlippedV;
+        applyTransform();
+        saveState();
+        break;
+    }
+
+    // Alt + Shift + R = reset
+    if (e.altKey && e.shiftKey && e.key.toLowerCase() === 'r') {
+      e.preventDefault();
+      currentRotation = 0;
+      isFlippedH = false;
+      isFlippedV = false;
+      applyTransform();
+      saveState();
+    }
+  });
+
+  // ─── SPA navigation observer ─────────────────────────────────────────────────
+
+  function observeNavigation() {
+    let lastUrl = location.href;
+    new MutationObserver(() => {
+      if (location.href !== lastUrl) {
+        lastUrl = location.href;
+        setTimeout(() => {
+          // Re-apply transform on new video
+          applyTransform();
+          // Re-inject overlay if removed
+          if (!document.getElementById('rp-overlay')) {
+            injectOverlay();
+          }
+        }, 1500);
+      }
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
+  // ─── Start ───────────────────────────────────────────────────────────────────
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
 })();
