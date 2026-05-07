@@ -1,346 +1,420 @@
-// YouTube Rotate Pro — content.js
+// YouTube Rotate Pro - Content Script v2.0
 (function () {
   'use strict';
 
   let currentRotation = 0;
   let isFlippedH = false;
   let isFlippedV = false;
-  let overlayPanel = null;
+  let panelVisible = true;
   let isDragging = false;
-  let dragOffsetX = 0, dragOffsetY = 0;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+  let overlayPanel = null;
 
-  // ─── Init ────────────────────────────────────────────────────────────────────
-
+  // ── INIT ────────────────────────────────────────────────────────
   function init() {
+    const old = document.getElementById('yt-rotate-pro-overlay');
+    const oldShow = document.getElementById('yrp-show-btn');
+    if (old) old.remove();
+    if (oldShow) oldShow.remove();
+    overlayPanel = null;
+
     const check = setInterval(() => {
-      const player = document.querySelector('.html5-video-player');
+      const player = document.querySelector('.html5-video-player, #movie_player, video');
       if (player) {
         clearInterval(check);
+        injectStyles();
+        createOverlay();
         loadSavedState();
-        injectOverlay();
-        observeNavigation();
       }
-    }, 1000);
+    }, 800);
   }
 
-  function loadSavedState() {
-    chrome.storage.local.get(['rotation', 'flipH', 'flipV'], (result) => {
-      if (result.rotation) {
-        currentRotation = result.rotation;
-        applyTransform();
-      }
-      if (result.flipH) { isFlippedH = result.flipH; applyTransform(); }
-      if (result.flipV) { isFlippedV = result.flipV; applyTransform(); }
-    });
-  }
-
-  // ─── Overlay UI ─────────────────────────────────────────────────────────────
-
-  function injectOverlay() {
-    if (document.getElementById('rp-overlay')) return;
-
-    // Inject Google Fonts into page
-    if (!document.getElementById('rp-fonts')) {
-      const link = document.createElement('link');
-      link.id = 'rp-fonts';
-      link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap';
-      document.head.appendChild(link);
-    }
-
-    overlayPanel = document.createElement('div');
-    overlayPanel.id = 'rp-overlay';
-    overlayPanel.innerHTML = `
-      <div id="rp-bar">
-        <span id="rp-label">ROTATE PRO</span>
-        <div id="rp-controls">
-          <button class="rp-btn" id="rp-cw"     title="Rotate 90° CW">
-            <span class="rp-icon">rotate_90_degrees_cw</span>
-          </button>
-          <button class="rp-btn" id="rp-ccw"    title="Rotate 90° CCW">
-            <span class="rp-icon">rotate_90_degrees_ccw</span>
-          </button>
-          <button class="rp-btn" id="rp-flip-h" title="Flip Horizontal">
-            <span class="rp-icon">flip</span>
-          </button>
-          <button class="rp-btn" id="rp-reset"  title="Reset">
-            <span class="rp-icon">restart_alt</span>
-          </button>
-          <button class="rp-btn" id="rp-close"  title="Close">
-            <span class="rp-icon">close</span>
-          </button>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(overlayPanel);
-    injectStyles();
-    bindOverlayEvents();
-    makeDraggable();
-
-    // Load position
-    chrome.storage.local.get(['overlayX', 'overlayY', 'position'], (r) => {
-      if (r.overlayX !== undefined && r.overlayY !== undefined) {
-        overlayPanel.style.left = r.overlayX + 'px';
-        overlayPanel.style.top  = r.overlayY + 'px';
-        overlayPanel.style.right = 'auto';
-      } else if (r.position === 'bottom-right') {
-        overlayPanel.style.bottom = '80px';
-        overlayPanel.style.top = 'auto';
-        overlayPanel.style.right = '16px';
-        overlayPanel.style.left = 'auto';
-      }
-    });
-  }
-
+  // ── INJECT STYLES ───────────────────────────────────────────────
   function injectStyles() {
-    if (document.getElementById('rp-styles')) return;
+    if (document.getElementById('yrp-styles')) return;
     const style = document.createElement('style');
-    style.id = 'rp-styles';
+    style.id = 'yrp-styles';
     style.textContent = `
-      #rp-overlay {
-        position: fixed;
-        top: 80px;
-        right: 16px;
-        z-index: 9999;
+      #yt-rotate-pro-overlay {
+        position: fixed !important;
+        top: 72px;
+        right: 20px;
+        z-index: 2147483647 !important;
+        display: flex !important;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
         user-select: none;
+        pointer-events: all !important;
       }
-
-      #rp-bar {
-        display: flex;
+      #yrp-bar {
+        display: flex !important;
         align-items: center;
         gap: 6px;
-        background: rgba(15, 15, 15, 0.92);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 10px;
-        padding: 7px 10px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+        background: rgba(10, 10, 10, 0.94) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        border: 1px solid rgba(255,255,255,0.14) !important;
+        border-radius: 10px !important;
+        padding: 7px 10px !important;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.7) !important;
         cursor: grab;
+        min-width: 270px;
       }
-
-      #rp-bar:active { cursor: grabbing; }
-
-      #rp-label {
-        color: #FF0000;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        font-family: 'Inter', sans-serif;
-        padding-right: 8px;
-        border-right: 1px solid rgba(255,255,255,0.1);
-        margin-right: 2px;
-        white-space: nowrap;
-      }
-
-      #rp-controls {
+      #yrp-logo {
         display: flex;
         align-items: center;
-        gap: 2px;
+        gap: 7px;
+        padding-right: 10px;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        flex-shrink: 0;
       }
-
-      .rp-btn {
-        width: 28px;
-        height: 28px;
+      #yrp-logo-icon {
+        width: 24px;
+        height: 24px;
+        background: rgba(255,0,0,0.15);
         border-radius: 6px;
-        background: transparent;
-        border: none;
-        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #aaa;
-        transition: background 0.15s, color 0.15s;
+        color: #FF0000;
+        font-size: 14px;
+        font-weight: 900;
       }
-
-      .rp-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
-      .rp-btn:active { transform: scale(0.9); }
-
-      #rp-close:hover { background: rgba(255,0,0,0.15); color: #FF0000; }
-
-      .rp-icon {
-        font-family: 'Material Symbols Outlined';
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        font-size: 17px;
-        line-height: 1;
+      #yrp-label {
+        color: #FF0000 !important;
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.1em !important;
+        text-transform: uppercase !important;
+        white-space: nowrap !important;
       }
-
-      /* Video smooth transform */
-      .html5-main-video {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        transform-origin: center center !important;
+      #yrp-controls {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex: 1;
+        justify-content: center;
+      }
+      .yrp-btn {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 7px !important;
+        background: transparent !important;
+        border: none !important;
+        color: #999 !important;
+        font-size: 16px !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: background 0.15s, color 0.15s, transform 0.1s !important;
+        line-height: 1 !important;
+        flex-shrink: 0;
+        padding: 0 !important;
+      }
+      .yrp-btn:hover {
+        background: rgba(255,255,255,0.1) !important;
+        color: #ffffff !important;
+      }
+      .yrp-btn:active { transform: scale(0.82) !important; }
+      .yrp-btn.yrp-active {
+        background: rgba(255,0,0,0.18) !important;
+        color: #FF0000 !important;
+        border: 1px solid rgba(255,0,0,0.35) !important;
+      }
+      #yrp-btn-reset:hover {
+        background: rgba(255,0,0,0.12) !important;
+        color: #FF5555 !important;
+      }
+      #yrp-btn-close {
+        color: #666 !important;
+        margin-left: 4px !important;
+        font-size: 18px !important;
+      }
+      #yrp-btn-close:hover {
+        background: rgba(255,60,60,0.15) !important;
+        color: #FF4444 !important;
+      }
+      #yrp-angle-badge {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,0,0,0.12) !important;
+        border: 1px solid rgba(255,0,0,0.32) !important;
+        border-radius: 6px !important;
+        padding: 3px 10px !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        color: #FF0000 !important;
+        letter-spacing: 0.05em !important;
+      }
+      #yrp-show-btn {
+        position: fixed !important;
+        top: 72px;
+        right: 20px;
+        z-index: 2147483647 !important;
+        background: rgba(10,10,10,0.92) !important;
+        border: 1px solid rgba(255,0,0,0.45) !important;
+        border-radius: 8px !important;
+        padding: 7px 13px !important;
+        color: #FF0000 !important;
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        cursor: pointer !important;
+        display: none;
+        align-items: center;
+        gap: 6px;
+        font-family: -apple-system, sans-serif !important;
+      }
+      #yrp-show-btn:hover {
+        background: rgba(255,0,0,0.12) !important;
       }
     `;
     document.head.appendChild(style);
   }
 
-  function bindOverlayEvents() {
-    document.getElementById('rp-cw').addEventListener('click', (e) => {
+  // ── CREATE OVERLAY ──────────────────────────────────────────────
+  function createOverlay() {
+    if (document.getElementById('yt-rotate-pro-overlay')) return;
+
+    overlayPanel = document.createElement('div');
+    overlayPanel.id = 'yt-rotate-pro-overlay';
+
+    const bar = document.createElement('div');
+    bar.id = 'yrp-bar';
+    bar.innerHTML = `
+      <div id="yrp-logo">
+        <div id="yrp-logo-icon">↻</div>
+        <span id="yrp-label">Rotate Pro</span>
+      </div>
+      <div id="yrp-controls">
+        <button class="yrp-btn" id="yrp-btn-cw"    title="Rotate 90° CW (Alt+R)">⟳</button>
+        <button class="yrp-btn" id="yrp-btn-ccw"   title="Rotate 90° CCW">⟲</button>
+        <button class="yrp-btn" id="yrp-btn-fliph" title="Flip Horizontal (Alt+H)">⇔</button>
+        <button class="yrp-btn" id="yrp-btn-flipv" title="Flip Vertical">⇕</button>
+        <button class="yrp-btn" id="yrp-btn-reset" title="Reset all (Alt+Shift+R)">↺</button>
+      </div>
+      <button class="yrp-btn" id="yrp-btn-close" title="Hide panel">✕</button>
+    `;
+
+    const badge = document.createElement('div');
+    badge.id = 'yrp-angle-badge';
+
+    overlayPanel.appendChild(bar);
+    overlayPanel.appendChild(badge);
+    document.body.appendChild(overlayPanel);
+
+    // Show-again button
+    const showBtn = document.createElement('button');
+    showBtn.id = 'yrp-show-btn';
+    showBtn.textContent = '↻ Rotate Pro';
+    document.body.appendChild(showBtn);
+
+    bindEvents(bar, showBtn);
+  }
+
+  // ── BIND EVENTS ─────────────────────────────────────────────────
+  function bindEvents(bar, showBtn) {
+
+    safe('yrp-btn-cw', 'click', (e) => {
       e.stopPropagation();
       currentRotation = (currentRotation + 90) % 360;
-      applyTransform();
-      saveState();
+      applyTransform(); saveState();
     });
 
-    document.getElementById('rp-ccw').addEventListener('click', (e) => {
+    safe('yrp-btn-ccw', 'click', (e) => {
       e.stopPropagation();
       currentRotation = (currentRotation - 90 + 360) % 360;
-      applyTransform();
-      saveState();
+      applyTransform(); saveState();
     });
 
-    document.getElementById('rp-flip-h').addEventListener('click', (e) => {
+    safe('yrp-btn-fliph', 'click', (e) => {
       e.stopPropagation();
       isFlippedH = !isFlippedH;
-      applyTransform();
-      saveState();
+      document.getElementById('yrp-btn-fliph').classList.toggle('yrp-active', isFlippedH);
+      applyTransform(); saveState();
     });
 
-    document.getElementById('rp-reset').addEventListener('click', (e) => {
+    safe('yrp-btn-flipv', 'click', (e) => {
+      e.stopPropagation();
+      isFlippedV = !isFlippedV;
+      document.getElementById('yrp-btn-flipv').classList.toggle('yrp-active', isFlippedV);
+      applyTransform(); saveState();
+    });
+
+    safe('yrp-btn-reset', 'click', (e) => {
       e.stopPropagation();
       currentRotation = 0;
       isFlippedH = false;
       isFlippedV = false;
-      applyTransform();
-      saveState();
+      document.getElementById('yrp-btn-fliph').classList.remove('yrp-active');
+      document.getElementById('yrp-btn-flipv').classList.remove('yrp-active');
+      applyTransform(); saveState();
     });
 
-    document.getElementById('rp-close').addEventListener('click', (e) => {
+    // ✅ CLOSE — hides panel, shows tiny button
+    safe('yrp-btn-close', 'click', (e) => {
       e.stopPropagation();
-      if (overlayPanel) {
-        overlayPanel.style.display = 'none';
-      }
+      e.preventDefault();
+      overlayPanel.style.setProperty('display', 'none', 'important');
+      panelVisible = false;
+      showBtn.style.display = 'flex';
     });
-  }
 
-  function makeDraggable() {
-    const bar = document.getElementById('rp-bar');
+    // ✅ SHOW AGAIN
+    showBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      overlayPanel.style.removeProperty('display');
+      overlayPanel.style.display = 'flex';
+      panelVisible = true;
+      showBtn.style.display = 'none';
+    });
 
+    // ── DRAG ────────────────────────────────────────────────────
     bar.addEventListener('mousedown', (e) => {
-      if (e.target.closest('.rp-btn')) return;
+      if (e.target.classList.contains('yrp-btn') || e.target.closest('.yrp-btn')) return;
       isDragging = true;
       const rect = overlayPanel.getBoundingClientRect();
       dragOffsetX = e.clientX - rect.left;
       dragOffsetY = e.clientY - rect.top;
-      overlayPanel.style.right = 'auto';
-      overlayPanel.style.bottom = 'auto';
+      e.preventDefault();
     });
 
     document.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
-      const x = e.clientX - dragOffsetX;
-      const y = e.clientY - dragOffsetY;
-      overlayPanel.style.left = x + 'px';
-      overlayPanel.style.top  = y + 'px';
+      const x = Math.max(0, Math.min(window.innerWidth - 300, e.clientX - dragOffsetX));
+      const y = Math.max(0, Math.min(window.innerHeight - 60, e.clientY - dragOffsetY));
+      overlayPanel.style.left  = x + 'px';
+      overlayPanel.style.top   = y + 'px';
+      overlayPanel.style.right = 'auto';
     });
 
     document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
+      if (!isDragging) return;
+      isDragging = false;
+      try {
         chrome.storage.local.set({
-          overlayX: parseInt(overlayPanel.style.left),
-          overlayY: parseInt(overlayPanel.style.top)
+          panelX: overlayPanel.style.left,
+          panelY: overlayPanel.style.top
         });
-      }
+      } catch(e) {}
     });
   }
 
-  // ─── Transform ───────────────────────────────────────────────────────────────
+  function safe(id, event, fn) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener(event, fn);
+  }
 
+  // ── APPLY TRANSFORM ─────────────────────────────────────────────
   function applyTransform() {
     const video = document.querySelector('video');
     if (!video) return;
-
-    const scaleX = isFlippedH ? -1 : 1;
-    const scaleY = isFlippedV ? -1 : 1;
-    video.style.transform = `rotate(${currentRotation}deg) scaleX(${scaleX}) scaleY(${scaleY})`;
+    const sx = isFlippedH ? -1 : 1;
+    const sy = isFlippedV ? -1 : 1;
+    video.style.transform       = `rotate(${currentRotation}deg) scaleX(${sx}) scaleY(${sy})`;
     video.style.transformOrigin = 'center center';
+    video.style.transition      = 'transform 0.3s cubic-bezier(0.4,0,0.2,1)';
+
+    const badge = document.getElementById('yrp-angle-badge');
+    if (!badge) return;
+    const active = currentRotation !== 0 || isFlippedH || isFlippedV;
+    badge.style.display = active ? 'flex' : 'none';
+    let label = currentRotation + '°';
+    if (isFlippedH) label += ' ⇔';
+    if (isFlippedV) label += ' ⇕';
+    badge.textContent = label;
   }
 
+  // ── SAVE / LOAD ─────────────────────────────────────────────────
   function saveState() {
-    chrome.storage.local.set({
-      rotation: currentRotation,
-      flipH: isFlippedH,
-      flipV: isFlippedV
-    });
+    try {
+      chrome.storage.local.set({ rotation: currentRotation, flipH: isFlippedH, flipV: isFlippedV });
+    } catch(e) {}
   }
 
-  // ─── Message listener (from popup) ──────────────────────────────────────────
+  function loadSavedState() {
+    try {
+      chrome.storage.local.get(['rotation','flipH','flipV','panelX','panelY'], (result) => {
+        if (result.rotation !== undefined) currentRotation = result.rotation;
+        if (result.flipH !== undefined) isFlippedH = result.flipH;
+        if (result.flipV !== undefined) isFlippedV = result.flipV;
+        if (result.panelX && overlayPanel) {
+          overlayPanel.style.left  = result.panelX;
+          overlayPanel.style.top   = result.panelY;
+          overlayPanel.style.right = 'auto';
+        }
+        if (isFlippedH) document.getElementById('yrp-btn-fliph')?.classList.add('yrp-active');
+        if (isFlippedV) document.getElementById('yrp-btn-flipv')?.classList.add('yrp-active');
+        if (currentRotation !== 0 || isFlippedH || isFlippedV) applyTransform();
+      });
+    } catch(e) {}
+  }
 
-  chrome.runtime.onMessage.addListener((msg) => {
-    if (msg.action === 'rotate') {
-      currentRotation = msg.angle;
-      applyTransform();
-      // Re-show overlay if hidden
-      if (overlayPanel) overlayPanel.style.display = '';
-    }
-    if (msg.action === 'reset') {
-      currentRotation = 0;
-      isFlippedH = false;
-      isFlippedV = false;
-      applyTransform();
-    }
-  });
-
-  // ─── Keyboard shortcuts ──────────────────────────────────────────────────────
-
+  // ── KEYBOARD SHORTCUTS ──────────────────────────────────────────
   document.addEventListener('keydown', (e) => {
-    if (!e.altKey) return;
-
-    switch (e.key.toLowerCase()) {
-      case 'r':
-        e.preventDefault();
-        currentRotation = (currentRotation + 90) % 360;
-        applyTransform();
-        saveState();
-        break;
-      case 'h':
-        e.preventDefault();
-        isFlippedH = !isFlippedH;
-        applyTransform();
-        saveState();
-        break;
-      case 'v':
-        e.preventDefault();
-        isFlippedV = !isFlippedV;
-        applyTransform();
-        saveState();
-        break;
-    }
-
-    // Alt + Shift + R = reset
     if (e.altKey && e.shiftKey && e.key.toLowerCase() === 'r') {
       e.preventDefault();
-      currentRotation = 0;
-      isFlippedH = false;
-      isFlippedV = false;
-      applyTransform();
-      saveState();
+      currentRotation = 0; isFlippedH = false; isFlippedV = false;
+      document.getElementById('yrp-btn-fliph')?.classList.remove('yrp-active');
+      document.getElementById('yrp-btn-flipv')?.classList.remove('yrp-active');
+      applyTransform(); saveState(); return;
+    }
+    if (e.altKey && e.key.toLowerCase() === 'r') {
+      e.preventDefault();
+      currentRotation = (currentRotation + 90) % 360;
+      applyTransform(); saveState();
+    }
+    if (e.altKey && e.key.toLowerCase() === 'h') {
+      e.preventDefault();
+      isFlippedH = !isFlippedH;
+      document.getElementById('yrp-btn-fliph')?.classList.toggle('yrp-active', isFlippedH);
+      applyTransform(); saveState();
+    }
+    if (e.altKey && e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentRotation = (currentRotation + 1) % 360;
+      applyTransform(); saveState();
+    }
+    if (e.altKey && e.key === 'ArrowDown') {
+      e.preventDefault();
+      currentRotation = (currentRotation - 1 + 360) % 360;
+      applyTransform(); saveState();
     }
   });
 
-  // ─── SPA navigation observer ─────────────────────────────────────────────────
+  // ── MESSAGES FROM POPUP ─────────────────────────────────────────
+  chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === 'SET_ROTATION') {
+      currentRotation = msg.angle;
+      applyTransform(); saveState();
+    }
+    if (msg.type === 'RESET') {
+      currentRotation = 0; isFlippedH = false; isFlippedV = false;
+      applyTransform(); saveState();
+    }
+    if (msg.type === 'SHOW_PANEL' && overlayPanel) {
+      overlayPanel.style.display = 'flex';
+      const sb = document.getElementById('yrp-show-btn');
+      if (sb) sb.style.display = 'none';
+    }
+  });
 
-  function observeNavigation() {
-    let lastUrl = location.href;
-    new MutationObserver(() => {
-      if (location.href !== lastUrl) {
-        lastUrl = location.href;
-        setTimeout(() => {
-          // Re-apply transform on new video
-          applyTransform();
-          // Re-inject overlay if removed
-          if (!document.getElementById('rp-overlay')) {
-            injectOverlay();
-          }
-        }, 1500);
-      }
-    }).observe(document.body, { childList: true, subtree: true });
-  }
+  // ── YOUTUBE SPA NAVIGATION ──────────────────────────────────────
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    if (location.href !== lastUrl) {
+      lastUrl = location.href;
+      setTimeout(init, 1800);
+    }
+  }).observe(document.body, { childList: true, subtree: true });
 
-  // ─── Start ───────────────────────────────────────────────────────────────────
-
+  // ── START ───────────────────────────────────────────────────────
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

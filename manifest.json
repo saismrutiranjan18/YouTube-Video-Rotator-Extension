@@ -5,7 +5,12 @@
   "description": "Rotate YouTube videos to any angle for comfortable viewing",
   "permissions": ["storage", "activeTab"],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon.png",
+      "48": "icons/icon.png",
+      "128": "icons/icon.png"
+    }
   },
   "content_scripts": [
     {

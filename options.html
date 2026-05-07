@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Rotate Pro — Settings</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -32,555 +32,347 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Sidebar */
+    /* SIDEBAR */
     .sidebar {
       width: 220px;
       background: #1A1A1A;
       border-right: 1px solid rgba(255,255,255,0.07);
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
       flex-shrink: 0;
+      min-height: 100vh;
     }
-
-    .sidebar-brand {
-      padding: 22px 16px 4px;
-      color: #FF0000;
-      font-weight: 900;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .sidebar-version {
-      padding: 0 16px 18px;
-      color: #555;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
+    .sidebar-logo { padding: 20px 16px 4px; color: #FF0000; font-weight: 900; font-size: 18px; letter-spacing: -0.02em; }
+    .sidebar-version { padding: 4px 16px 20px; color: #555; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; }
+    .sidebar-nav { display: flex; flex-direction: column; }
 
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      cursor: pointer;
-      transition: all 0.15s;
-      color: #777;
-      font-size: 12px;
-      font-weight: 500;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; cursor: pointer;
+      transition: all 0.15s; color: #777;
+      font-size: 12px; font-weight: 500;
       border-left: 2px solid transparent;
+      background: none; border-right: none; border-top: none; border-bottom: none;
+      width: 100%; text-align: left;
+      font-family: 'Inter', sans-serif;
     }
-
     .nav-item:hover { background: rgba(255,255,255,0.04); color: #ccc; }
-
-    .nav-item.active {
-      background: rgba(255,255,255,0.07);
-      color: #fff;
-      border-left-color: #FF0000;
-    }
-
+    .nav-item.active { background: rgba(255,255,255,0.06); color: #fff; border-left-color: #FF0000; }
     .nav-item .material-symbols-outlined { font-size: 19px; }
 
-    /* Main content */
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+    /* MAIN */
+    .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
     .topbar {
       background: #0F0F0F;
       border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 10px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-
     .topbar-title { color: #fff; font-weight: 700; font-size: 14px; }
+    .topbar-actions { display: flex; gap: 6px; }
 
     .icon-btn {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #666;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: transparent; border: none; cursor: pointer;
+      color: #666; display: flex; align-items: center; justify-content: center;
       transition: background 0.15s, color 0.15s;
     }
+    .icon-btn:hover { background: rgba(255,255,255,0.06); color: #aaa; }
 
-    .icon-btn:hover { background: rgba(255,255,255,0.06); color: #ccc; }
+    .scroll-area { flex: 1; overflow-y: auto; padding: 20px; }
+    .scroll-area::-webkit-scrollbar { width: 4px; }
+    .scroll-area::-webkit-scrollbar-track { background: transparent; }
+    .scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
 
-    .content-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 22px 20px;
-    }
+    .page-header { margin-bottom: 20px; }
+    .page-header h1 { color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .page-header p { color: #666; font-size: 12px; line-height: 1.6; }
 
-    .content-area::-webkit-scrollbar { width: 4px; }
-    .content-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .bento-full { grid-column: 1 / -1; }
 
-    .page-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-bottom: 4px; }
-    .page-sub { font-size: 12px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+    .card { border-radius: 12px; padding: 14px; }
 
-    .bento-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .card {
-      border-radius: 12px;
-      padding: 14px;
-    }
-
-    .card.full { grid-column: 1 / -1; }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .card-title-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: #fff;
-    }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .card-title-row { display: flex; align-items: center; gap: 8px; }
+    .card-title-row .material-symbols-outlined { color: #FF0000; font-size: 20px; }
+    .card-title { font-size: 12px; font-weight: 600; color: #fff; }
 
     .badge {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 4px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+      color: #FF0000; background: rgba(255,0,0,0.1);
+      padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
     }
 
-    .badge-red { color: #FF0000; background: rgba(255,0,0,0.1); }
-
-    /* Shortcut rows */
     .shortcut-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px;
-      border-radius: 8px;
-      transition: background 0.12s;
-      margin-bottom: 3px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px; border-radius: 8px; transition: background 0.15s; margin-bottom: 4px;
     }
-
     .shortcut-row:hover { background: rgba(255,255,255,0.04); }
-    .shortcut-label { font-size: 12px; color: #ccc; }
+    .shortcut-name { font-size: 12px; color: #ccc; }
 
     kbd {
-      padding: 3px 7px;
-      background: #000;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      font-family: 'Inter', monospace;
-      color: #aaa;
+      padding: 3px 7px; background: #000;
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      font-family: 'Inter', monospace; color: #aaa;
+    }
+    kbd.active-key { color: #FF0000; border-color: rgba(255,0,0,0.3); }
+
+    .outline-btn {
+      width: 100%; margin-top: 10px; padding: 8px;
+      border: 1px solid rgba(255,255,255,0.1); background: transparent;
+      color: #aaa; border-radius: 8px; font-size: 11px; font-weight: 500;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s, color 0.15s;
+    }
+    .outline-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+
+    .opacity-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .opacity-label { font-size: 11px; color: #888; }
+    .opacity-value { font-size: 11px; font-weight: 700; color: #fff; }
+
+    .progress-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+    .progress-fill { height: 100%; background: #FF0000; border-radius: 2px; }
+
+    input[type="range"] {
+      -webkit-appearance: none; width: 100%; height: 4px;
+      background: rgba(255,255,255,0.1); border-radius: 2px;
+      cursor: pointer; margin-bottom: 14px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 12px; height: 12px;
+      border-radius: 50%; background: #FF0000; cursor: pointer;
+      box-shadow: 0 0 6px rgba(255,0,0,0.4);
     }
 
-    kbd.active { color: #FF0000; }
+    .position-label { font-size: 11px; color: #888; display: block; margin-bottom: 6px; }
+    .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 
-    .ghost-btn {
-      width: 100%;
-      margin-top: 10px;
-      padding: 8px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      color: #aaa;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      transition: background 0.15s, color 0.15s;
+    .pos-btn {
+      padding: 8px; text-align: center; border-radius: 8px;
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      transition: all 0.15s; font-family: 'Inter', sans-serif;
+    }
+    .pos-btn.active { background: #fff; color: #000; border: none; }
+    .pos-btn.inactive { background: rgba(39,39,39,0.8); color: #666; border: 1px solid rgba(255,255,255,0.06); }
+    .pos-btn.inactive:hover { color: #fff; }
+
+    .toggle-row { display: flex; align-items: center; gap: 8px; }
+    .toggle-label { font-size: 11px; color: #666; }
+
+    .mini-toggle {
+      width: 32px; height: 16px; background: #444;
+      border-radius: 8px; position: relative; cursor: pointer; flex-shrink: 0;
+    }
+    .mini-toggle-thumb {
+      position: absolute; left: 2px; top: 2px;
+      width: 12px; height: 12px; background: #fff;
+      border-radius: 50%; transition: all 0.2s;
     }
 
-    .ghost-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
-
-    /* Progress bar */
-    .progress-bar {
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: #FF0000;
-      border-radius: 2px;
-      transition: width 0.3s;
-    }
-
-    /* Segment control */
-    .segment {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    .seg-btn {
-      padding: 8px;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .seg-btn.active { background: #fff; color: #000; }
-    .seg-btn.inactive { background: rgba(39,39,39,0.8); border: 1px solid rgba(255,255,255,0.06); color: #666; }
-    .seg-btn.inactive:hover { color: #fff; }
-
-    /* Toggle switch */
-    .toggle-wrap { cursor: pointer; }
-    .toggle-track {
-      width: 32px; height: 16px;
-      border-radius: 8px;
-      background: #FF0000;
-      position: relative;
-      transition: background 0.2s;
-    }
-    .toggle-track.off { background: #444; }
-    .toggle-thumb {
-      position: absolute;
-      top: 2px; right: 2px;
-      width: 12px; height: 12px;
-      background: #fff;
-      border-radius: 50%;
-      transition: all 0.2s;
-    }
-    .toggle-track.off .toggle-thumb { right: auto; left: 2px; }
-
-    /* Channel input area */
-    .input-area {
+    .channel-input-area {
       background: rgba(0,0,0,0.4);
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px;
-      padding: 10px;
+      border-radius: 8px; padding: 10px;
     }
+    .input-row { display: flex; gap: 8px; margin-bottom: 10px; }
 
-    .channel-input-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
+    .text-input {
+      flex: 1; background: #000;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+      padding: 8px 12px; color: #fff; font-size: 12px; outline: none;
+      font-family: 'Inter', sans-serif; transition: border-color 0.15s;
     }
-
-    .channel-input {
-      flex: 1;
-      background: #000;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 8px 12px;
-      color: #fff;
-      font-size: 12px;
-      outline: none;
-      font-family: 'Inter', sans-serif;
-      transition: border-color 0.15s;
-    }
-
-    .channel-input:focus { border-color: rgba(255,0,0,0.5); }
-    .channel-input::placeholder { color: #444; }
+    .text-input:focus { border-color: rgba(255,0,0,0.5); }
+    .text-input::placeholder { color: #444; }
 
     .add-btn {
-      background: #FF0000;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      font-family: 'Inter', sans-serif;
+      background: #FF0000; color: #fff; border: none;
+      padding: 8px 16px; border-radius: 8px;
+      font-size: 11px; font-weight: 700; cursor: pointer;
+      letter-spacing: 0.05em; font-family: 'Inter', sans-serif;
       transition: filter 0.15s;
     }
-
     .add-btn:hover { filter: brightness(1.1); }
 
     .channel-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px;
-      border-radius: 6px;
-      transition: background 0.12s;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px; border-radius: 6px; transition: background 0.15s; margin-bottom: 2px;
     }
-
     .channel-row:hover { background: rgba(255,255,255,0.04); }
-
+    .channel-info { display: flex; align-items: center; gap: 10px; }
     .channel-avatar {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: #888;
-      font-weight: 700;
-      margin-right: 10px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #333; display: flex; align-items: center; justify-content: center;
+      font-size: 10px; color: #888; font-weight: 700;
     }
-
     .channel-name { font-size: 12px; color: #ccc; }
-
     .delete-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #555;
-      display: flex;
-      align-items: center;
-      transition: color 0.15s;
+      background: none; border: none; cursor: pointer; color: #555;
+      display: flex; align-items: center; transition: color 0.15s; padding: 4px; border-radius: 4px;
     }
-
     .delete-btn:hover { color: #ff4444; }
 
-    /* Preview card */
     .preview-video {
-      aspect-ratio: 16/9;
-      border-radius: 8px;
-      background: #000;
-      position: relative;
-      overflow: hidden;
-      max-height: 160px;
+      aspect-ratio: 16/9; border-radius: 8px; background: #000;
+      position: relative; overflow: hidden; max-height: 160px;
     }
-
-    .preview-video-bg {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #1a0808, #000 60%, #0a0a14);
-    }
-
-    .preview-icon-center {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    .preview-video-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1a0808 0%, #000 60%, #0a0a14 100%); }
+    .preview-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
     .preview-icon-circle {
       width: 52px; height: 52px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: rgba(255,255,255,0.07); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
     }
-
     .preview-icon-circle .material-symbols-outlined { font-size: 28px; color: #fff; }
 
     .preview-badge {
-      position: absolute;
-      top: 10px; left: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(20,20,20,0.85);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 6px;
-      padding: 5px 10px;
+      position: absolute; top: 10px; left: 10px;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(20,20,20,0.85); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 5px 10px;
     }
-
-    .pulse-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #FF0000;
-      animation: pulse 2s infinite;
-    }
-
+    .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #FF0000; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .preview-badge-text { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #fff; text-transform: uppercase; }
 
-    .preview-badge span { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #fff; text-transform: uppercase; }
-
-    /* Save toast */
     .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(60px);
-      background: rgba(39,39,39,0.95);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(20px);
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 12px;
-      color: #fff;
-      font-weight: 500;
-      transition: transform 0.3s;
-      z-index: 100;
-      white-space: nowrap;
+      position: fixed; bottom: 20px; right: 20px;
+      background: rgba(39,39,39,0.95); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 10px 16px; font-size: 12px; color: #fff;
+      backdrop-filter: blur(20px); opacity: 0; transform: translateY(8px);
+      transition: all 0.3s; pointer-events: none;
     }
-
-    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.show { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sidebar-brand">Rotate Pro</div>
+    <div class="sidebar-logo">Rotate Pro</div>
     <div class="sidebar-version">V1.2.0</div>
-    <nav>
-      <div class="nav-item" onclick="setNav(this)">
+    <nav class="sidebar-nav">
+      <button class="nav-item">
         <span class="material-symbols-outlined">screen_rotation</span>
-        Rotation
-      </div>
-      <div class="nav-item" onclick="setNav(this)">
+        <span>Rotation</span>
+      </button>
+      <button class="nav-item">
         <span class="material-symbols-outlined">keyboard</span>
-        Shortcuts
-      </div>
-      <div class="nav-item active" onclick="setNav(this)">
+        <span>Shortcuts</span>
+      </button>
+      <button class="nav-item active">
         <span class="material-symbols-outlined">settings_suggest</span>
-        Behavior
-      </div>
-      <div class="nav-item" onclick="setNav(this)">
+        <span>Behavior</span>
+      </button>
+      <button class="nav-item">
         <span class="material-symbols-outlined">school</span>
-        Tutorial
-      </div>
+        <span>Tutorial</span>
+      </button>
     </nav>
   </aside>
 
-  <!-- Main -->
+  <!-- MAIN -->
   <div class="main-content">
 
-    <!-- Top bar -->
-    <header class="topbar">
+    <div class="topbar">
       <span class="topbar-title">YouTube Rotate Pro</span>
-      <div style="display:flex;gap:6px;">
-        <button class="icon-btn"><span class="material-symbols-outlined">help_outline</span></button>
-        <button class="icon-btn"><span class="material-symbols-outlined">settings</span></button>
+      <div class="topbar-actions">
+        <button class="icon-btn"><span class="material-symbols-outlined" style="font-size:20px;">help_outline</span></button>
+        <button class="icon-btn"><span class="material-symbols-outlined" style="font-size:20px;">settings</span></button>
       </div>
-    </header>
+    </div>
 
-    <!-- Content -->
-    <div class="content-area">
-      <h1 class="page-title">Behavior &amp; Preferences</h1>
-      <p class="page-sub">Configure how Rotate Pro integrates with your YouTube viewing experience.</p>
+    <div class="scroll-area">
+      <div class="page-header">
+        <h1>Behavior &amp; Preferences</h1>
+        <p>Configure how Rotate Pro integrates with your YouTube viewing experience.</p>
+      </div>
 
-      <div class="bento-grid">
+      <div class="bento">
 
         <!-- Keyboard Shortcuts -->
-        <div class="card glass">
+        <div class="glass card">
           <div class="card-header">
             <div class="card-title-row">
-              <span class="material-symbols-outlined" style="color:#FF0000;">keyboard</span>
+              <span class="material-symbols-outlined">keyboard</span>
               <span class="card-title">Keyboard Shortcuts</span>
             </div>
-            <span class="badge badge-red">HOTKEYS</span>
+            <span class="badge">HOTKEYS</span>
           </div>
-          <div>
-            <div class="shortcut-row" style="background:rgba(255,255,255,0.04);">
-              <span class="shortcut-label">Rotate Clockwise</span>
-              <kbd class="active">ALT + R</kbd>
-            </div>
-            <div class="shortcut-row">
-              <span class="shortcut-label">Flip Horizontal</span>
-              <kbd>ALT + H</kbd>
-            </div>
-            <div class="shortcut-row">
-              <span class="shortcut-label">Reset Alignment</span>
-              <kbd>ALT + SHIFT + R</kbd>
-            </div>
+          <div class="shortcut-row">
+            <span class="shortcut-name">Rotate Clockwise</span>
+            <kbd class="active-key">ALT + R</kbd>
           </div>
-          <button class="ghost-btn">Edit All Shortcuts</button>
+          <div class="shortcut-row">
+            <span class="shortcut-name">Flip Horizontal</span>
+            <kbd>ALT + H</kbd>
+          </div>
+          <div class="shortcut-row">
+            <span class="shortcut-name">Reset Alignment</span>
+            <kbd>ALT + SHIFT + R</kbd>
+          </div>
+          <button class="outline-btn" id="editShortcutsBtn">Edit All Shortcuts</button>
         </div>
 
         <!-- UI Customization -->
-        <div class="card glass">
-          <div class="card-header">
-            <div class="card-title-row">
-              <span class="material-symbols-outlined" style="color:#FF0000;">palette</span>
-              <span class="card-title">UI Customization</span>
-            </div>
+        <div class="glass card">
+          <div class="card-title-row" style="margin-bottom:14px;">
+            <span class="material-symbols-outlined">palette</span>
+            <span class="card-title">UI Customization</span>
           </div>
-
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-              <span style="font-size:11px;color:#888;">Overlay Opacity</span>
-              <span style="font-size:11px;font-weight:700;color:#fff;" id="opacity-label">85%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" id="opacity-fill" style="width:85%;"></div>
-            </div>
-            <input type="range" min="0" max="100" value="85" id="opacity-slider"
-              style="width:100%;margin-top:8px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;-webkit-appearance:none;cursor:pointer;"
-              oninput="updateOpacity(this.value)"/>
+          <div class="opacity-row">
+            <span class="opacity-label">Overlay Opacity</span>
+            <span class="opacity-value" id="opacityVal">85%</span>
           </div>
-
-          <div>
-            <span style="font-size:11px;color:#888;display:block;margin-bottom:6px;">Control Position</span>
-            <div class="segment">
-              <div class="seg-btn active" onclick="setPosition(this,'top-left')">Top Left</div>
-              <div class="seg-btn inactive" onclick="setPosition(this,'bottom-right')">Bottom Right</div>
-            </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="opacityBar" style="width:85%;"></div>
+          </div>
+          <input type="range" min="0" max="100" value="85" id="opacitySlider"/>
+          <span class="position-label">Control Position</span>
+          <div class="position-grid">
+            <button class="pos-btn active">Top Left</button>
+            <button class="pos-btn inactive">Bottom Right</button>
           </div>
         </div>
 
         <!-- Default Behavior -->
-        <div class="card glass full">
+        <div class="glass card bento-full">
           <div class="card-header">
             <div class="card-title-row">
-              <span class="material-symbols-outlined" style="color:#FF0000;">auto_mode</span>
+              <span class="material-symbols-outlined">auto_mode</span>
               <span class="card-title">Default Behavior</span>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:11px;color:#666;">Auto-rotate for specified channels</span>
-              <div class="toggle-wrap" onclick="toggleAuto(this)">
-                <div class="toggle-track" id="auto-track">
-                  <div class="toggle-thumb"></div>
-                </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Auto-rotate for specified channels</span>
+              <div class="mini-toggle" id="autoToggle" data-on="false">
+                <div class="mini-toggle-thumb"></div>
               </div>
             </div>
           </div>
-          <div class="input-area">
-            <div class="channel-input-row">
-              <input class="channel-input" type="text" id="channel-input" placeholder="Add YouTube Channel URL..."/>
-              <button class="add-btn" onclick="addChannel()">ADD</button>
+          <div class="channel-input-area">
+            <div class="input-row">
+              <input class="text-input" id="channelInput" placeholder="Add YouTube Channel URL..." type="text"/>
+              <button class="add-btn" id="addChannelBtn">ADD</button>
             </div>
-            <div id="channel-list">
+            <div id="channelList">
               <div class="channel-row">
-                <div style="display:flex;align-items:center;">
+                <div class="channel-info">
                   <div class="channel-avatar">M</div>
                   <span class="channel-name">MKBHD</span>
                 </div>
-                <button class="delete-btn" onclick="removeChannel(this)">
+                <button class="delete-btn">
                   <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
                 </button>
               </div>
               <div class="channel-row">
-                <div style="display:flex;align-items:center;">
+                <div class="channel-info">
                   <div class="channel-avatar">V</div>
                   <span class="channel-name">Verge Science</span>
                 </div>
-                <button class="delete-btn" onclick="removeChannel(this)">
+                <button class="delete-btn">
                   <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
                 </button>
               </div>
@@ -589,23 +381,21 @@
         </div>
 
         <!-- Live Preview -->
-        <div class="card glass full">
-          <div class="card-header">
-            <div class="card-title-row">
-              <span class="material-symbols-outlined" style="color:#FF0000;">visibility</span>
-              <span class="card-title">Live Preview</span>
-            </div>
+        <div class="glass card bento-full">
+          <div class="card-title-row" style="margin-bottom:12px;">
+            <span class="material-symbols-outlined">visibility</span>
+            <span class="card-title">Live Preview</span>
           </div>
           <div class="preview-video">
             <div class="preview-video-bg"></div>
-            <div class="preview-icon-center">
+            <div class="preview-center">
               <div class="preview-icon-circle">
                 <span class="material-symbols-outlined">crop_rotate</span>
               </div>
             </div>
             <div class="preview-badge">
               <div class="pulse-dot"></div>
-              <span>90° Rotation Active</span>
+              <span class="preview-badge-text">90° Rotation Active</span>
             </div>
           </div>
         </div>
@@ -614,90 +404,10 @@
     </div>
   </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast">✓ Settings saved</div>
+  <div class="toast" id="toast">✓ Saved</div>
 
-  <script>
-    // Load saved settings
-    chrome.storage.local.get(['opacity', 'position', 'autoRotate', 'channels'], (result) => {
-      if (result.opacity !== undefined) {
-        document.getElementById('opacity-slider').value = result.opacity;
-        updateOpacity(result.opacity);
-      }
-      if (result.autoRotate === false) {
-        document.getElementById('auto-track').classList.add('off');
-      }
-      if (result.channels) {
-        result.channels.forEach(ch => appendChannel(ch));
-      }
-    });
+  <!-- ✅ External JS — no inline scripts -->
+  <script src="options.js"></script>
 
-    function setNav(el) {
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
-    }
-
-    function updateOpacity(val) {
-      document.getElementById('opacity-label').textContent = val + '%';
-      document.getElementById('opacity-fill').style.width = val + '%';
-      chrome.storage.local.set({ opacity: val });
-    }
-
-    function setPosition(btn, pos) {
-      document.querySelectorAll('.seg-btn').forEach(b => {
-        b.className = 'seg-btn inactive';
-      });
-      btn.className = 'seg-btn active';
-      chrome.storage.local.set({ position: pos });
-      showToast();
-    }
-
-    function toggleAuto(wrap) {
-      const track = document.getElementById('auto-track');
-      track.classList.toggle('off');
-      chrome.storage.local.set({ autoRotate: !track.classList.contains('off') });
-    }
-
-    function addChannel() {
-      const input = document.getElementById('channel-input');
-      const val = input.value.trim();
-      if (!val) return;
-      appendChannel(val);
-      input.value = '';
-      saveChannels();
-      showToast();
-    }
-
-    function appendChannel(name) {
-      const initial = name.charAt(0).toUpperCase();
-      const div = document.createElement('div');
-      div.className = 'channel-row';
-      div.innerHTML = `
-        <div style="display:flex;align-items:center;">
-          <div class="channel-avatar">${initial}</div>
-          <span class="channel-name">${name}</span>
-        </div>
-        <button class="delete-btn" onclick="removeChannel(this)">
-          <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
-        </button>`;
-      document.getElementById('channel-list').appendChild(div);
-    }
-
-    function removeChannel(btn) {
-      btn.closest('.channel-row').remove();
-      saveChannels();
-    }
-
-    function saveChannels() {
-      const names = [...document.querySelectorAll('.channel-name')].map(el => el.textContent);
-      chrome.storage.local.set({ channels: names });
-    }
-
-    function showToast() {
-      const t = document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2000);
-    }
-  </script>
 </body>
 </html>

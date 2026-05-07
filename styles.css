@@ -1,199 +1,169 @@
-/* YouTube Video Rotator Styles */
-#yt-rotator-panel {
+/* ============================================================
+   YouTube Rotate Pro — Overlay Styles (injected on youtube.com)
+   ============================================================ */
+
+/* ─── OVERLAY PANEL ─────────────────────────────────────────── */
+#yt-rotate-pro-overlay {
   position: fixed;
   top: 80px;
   right: 20px;
-  background: rgba(0, 0, 0, 0.9);
-  border: 2px solid #ff0000;
-  border-radius: 12px;
-  padding: 0;
-  z-index: 9999;
-  font-family: 'Roboto', Arial, sans-serif;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  min-width: 280px;
-  backdrop-filter: blur(10px);
-}
-
-.yt-rotator-header {
+  z-index: 9999999;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, #ff0000, #cc0000);
-  border-radius: 10px 10px 0 0;
-  cursor: move;
-}
-
-.yt-rotator-title {
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   user-select: none;
 }
 
-.yt-rotator-toggle {
-  background: rgba(255, 255, 255, 0.2);
+/* ─── MAIN BAR ───────────────────────────────────────────────── */
+#yrp-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 15, 15, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 6px 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  cursor: grab;
+  transition: border-color 0.2s;
+}
+
+#yrp-bar:hover {
+  border-color: rgba(255, 0, 0, 0.25);
+}
+
+/* ─── LOGO SECTION ───────────────────────────────────────────── */
+#yrp-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: grab;
+}
+
+.yrp-icon {
+  color: #FF0000;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+#yrp-label {
+  color: #FF0000;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ─── CONTROLS ROW ───────────────────────────────────────────── */
+#yrp-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────── */
+.yrp-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: transparent;
   border: none;
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  color: #aaa;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+  line-height: 1;
 }
 
-.yt-rotator-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
+.yrp-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
 }
 
-.yt-rotator-content {
-  padding: 16px;
+.yrp-btn:active {
+  transform: scale(0.88);
 }
 
-.yt-rotator-quick {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
+/* Active state (flip toggled on) */
+.yrp-btn.yrp-active {
+  background: rgba(255, 0, 0, 0.15);
+  color: #FF0000;
+  border: 1px solid rgba(255, 0, 0, 0.3);
 }
 
-.yt-rotator-btn {
-  background: linear-gradient(135deg, #282828, #181818);
-  border: 2px solid #404040;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 13px;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
+/* Reset button – red on hover */
+#yrp-reset:hover {
+  background: rgba(255, 0, 0, 0.12);
+  color: #FF0000;
 }
 
-.yt-rotator-btn:hover {
-  background: linear-gradient(135deg, #ff0000, #cc0000);
-  border-color: #ff0000;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+/* Close button */
+#yrp-close {
+  font-size: 18px;
+  color: #555;
+  margin-left: 2px;
 }
 
-.yt-rotator-btn:active {
-  transform: translateY(0);
+#yrp-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #aaa;
 }
 
-.yt-rotator-reset {
-  background: linear-gradient(135deg, #404040, #303030);
-  grid-column: span 2;
-}
-
-.yt-rotator-reset:hover {
-  background: linear-gradient(135deg, #606060, #505050);
-  border-color: #808080;
-}
-
-.yt-rotator-fine {
-  margin-bottom: 16px;
-}
-
-.yt-rotator-label {
-  display: block;
-  color: white;
-  font-size: 12px;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-#yt-rotator-value {
-  color: #ff0000;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.yt-rotator-slider {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: #404040;
-  outline: none;
-  -webkit-appearance: none;
-}
-
-.yt-rotator-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff0000, #cc0000);
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.5);
-  transition: all 0.2s;
-}
-
-.yt-rotator-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 3px 10px rgba(255, 0, 0, 0.7);
-}
-
-.yt-rotator-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff0000, #cc0000);
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.5);
-}
-
-.yt-rotator-flip {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #404040;
-}
-
-.yt-rotator-btn-small {
-  background: linear-gradient(135deg, #282828, #181818);
-  border: 2px solid #404040;
-  color: white;
-  padding: 8px;
+/* ─── ANGLE BADGE ────────────────────────────────────────────── */
+#yrp-angle-badge {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 0, 0, 0.12);
+  border: 1px solid rgba(255, 0, 0, 0.3);
   border-radius: 6px;
-  cursor: pointer;
+  padding: 3px 10px;
   font-size: 11px;
-  font-weight: 600;
-  transition: all 0.2s;
+  font-weight: 800;
+  color: #FF0000;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: yrp-fadein 0.2s ease;
 }
 
-.yt-rotator-btn-small:hover {
-  background: linear-gradient(135deg, #3ea6ff, #2d8dd8);
-  border-color: #3ea6ff;
-  transform: translateY(-1px);
+@keyframes yrp-fadein {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Draggable panel */
-#yt-rotator-panel.dragging {
-  cursor: move;
-  opacity: 0.8;
-}
-
-/* Animation for button press */
-@keyframes buttonPress {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(0.95); }
-}
-
-.yt-rotator-btn:active,
-.yt-rotator-btn-small:active {
-  animation: buttonPress 0.2s;
-}
-
-/* Ensure video container can handle transformations */
+/* ─── VIDEO SMOOTH TRANSFORM ─────────────────────────────────── */
+.html5-main-video,
 video {
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transform-origin: center center !important;
+}
+
+/* ─── SCROLLBAR (options page) ───────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
