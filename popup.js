@@ -43,6 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
     sendToPage({ type: 'SHOW_PANEL' });
   });
 
+  // ── HELP BUTTON ───────────────────────────────────────────
+  document.getElementById('helpBtn').addEventListener('click', () => {
+    chrome.tabs.create({ url: 'https://github.com/saismrutiranjan18' }); 
+  });
+
   // ── SETTINGS BUTTON ───────────────────────────────────────
   document.getElementById('settingsBtn').addEventListener('click', () => {
     chrome.runtime.openOptionsPage();
