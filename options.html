@@ -8,11 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #0F0F0F; color: #E5E2E1;
-      font-family: 'Inter', sans-serif; min-height: 100vh; display: flex;
-    }
+    body { background: #0F0F0F; color: #E5E2E1; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; }
 
     .material-symbols-outlined {
       font-family: 'Material Symbols Outlined';
@@ -23,11 +19,7 @@
     .glass { background: rgba(39,39,39,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
 
     /* SIDEBAR */
-    .sidebar {
-      width: 220px; background: #1A1A1A;
-      border-right: 1px solid rgba(255,255,255,0.07);
-      display: flex; flex-direction: column; flex-shrink: 0; min-height: 100vh;
-    }
+    .sidebar { width: 220px; background: #1A1A1A; border-right: 1px solid rgba(255,255,255,0.07); display: flex; flex-direction: column; flex-shrink: 0; min-height: 100vh; }
     .sidebar-logo { padding: 20px 16px 4px; color: #FF0000; font-weight: 900; font-size: 18px; letter-spacing: -0.02em; }
     .sidebar-version { padding: 4px 16px 20px; color: #555; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; }
     .sidebar-nav { display: flex; flex-direction: column; }
@@ -46,23 +38,15 @@
     /* MAIN */
     .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
-    .topbar {
-      background: #0F0F0F; border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
-    }
+    .topbar { background: #0F0F0F; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
     .topbar-title { color: #fff; font-weight: 700; font-size: 14px; }
     .topbar-actions { display: flex; gap: 6px; }
 
-    .icon-btn {
-      width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none;
-      cursor: pointer; color: #666; display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, color 0.15s;
-    }
+    .icon-btn { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; cursor: pointer; color: #666; display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; }
     .icon-btn:hover { background: rgba(255,255,255,0.06); color: #aaa; }
 
     .scroll-area { flex: 1; overflow-y: auto; padding: 20px; }
     .scroll-area::-webkit-scrollbar { width: 4px; }
-    .scroll-area::-webkit-scrollbar-track { background: transparent; }
     .scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
 
     .page-header { margin-bottom: 20px; }
@@ -78,31 +62,16 @@
     .card-title-row .material-symbols-outlined { color: #FF0000; font-size: 20px; }
     .card-title { font-size: 12px; font-weight: 600; color: #fff; }
 
-    .badge {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: #FF0000;
-      background: rgba(255,0,0,0.1); padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
-    }
+    .badge { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: #FF0000; background: rgba(255,0,0,0.1); padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
 
-    .shortcut-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px; border-radius: 8px; transition: background 0.15s; margin-bottom: 4px;
-    }
+    .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 8px; border-radius: 8px; transition: background 0.15s; margin-bottom: 4px; }
     .shortcut-row:hover { background: rgba(255,255,255,0.04); }
     .shortcut-name { font-size: 12px; color: #ccc; }
 
-    kbd {
-      padding: 3px 7px; background: #000; border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
-      font-family: 'Inter', monospace; color: #aaa;
-    }
+    kbd { padding: 3px 7px; background: #000; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; font-family: 'Inter', monospace; color: #aaa; }
     kbd.active-key { color: #FF0000; border-color: rgba(255,0,0,0.3); }
 
-    .outline-btn {
-      width: 100%; margin-top: 10px; padding: 8px;
-      border: 1px solid rgba(255,255,255,0.1); background: transparent;
-      color: #aaa; border-radius: 8px; font-size: 11px; font-weight: 500;
-      cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s;
-    }
+    .outline-btn { width: 100%; margin-top: 10px; padding: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: #aaa; border-radius: 8px; font-size: 11px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
     .outline-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
 
     .opacity-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
@@ -112,132 +81,82 @@
     .progress-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
     .progress-fill { height: 100%; background: #FF0000; border-radius: 2px; }
 
-    input[type="range"] {
-      -webkit-appearance: none; width: 100%; height: 4px;
-      background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; margin-bottom: 14px;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 12px; height: 12px;
-      border-radius: 50%; background: #FF0000; cursor: pointer; box-shadow: 0 0 6px rgba(255,0,0,0.4);
-    }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; margin-bottom: 14px; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #FF0000; cursor: pointer; box-shadow: 0 0 6px rgba(255,0,0,0.4); }
 
     .position-label { font-size: 11px; color: #888; display: block; margin-bottom: 6px; }
     .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-
-    .pos-btn {
-      padding: 8px; text-align: center; border-radius: 8px;
-      font-size: 11px; font-weight: 600; cursor: pointer;
-      transition: all 0.15s; font-family: 'Inter', sans-serif;
-    }
+    .pos-btn { padding: 8px; text-align: center; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
     .pos-btn.active { background: #fff; color: #000; border: none; }
     .pos-btn.inactive { background: rgba(39,39,39,0.8); color: #666; border: 1px solid rgba(255,255,255,0.06); }
     .pos-btn.inactive:hover { color: #fff; }
 
     .toggle-row { display: flex; align-items: center; gap: 8px; }
     .toggle-label { font-size: 11px; color: #666; }
+    .mini-toggle { width: 32px; height: 16px; background: #444; border-radius: 8px; position: relative; cursor: pointer; flex-shrink: 0; transition: background 0.2s; }
+    .mini-toggle.on { background: #FF0000; }
+    .mini-toggle-thumb { position: absolute; left: 2px; top: 2px; width: 12px; height: 12px; background: #fff; border-radius: 50%; transition: left 0.2s; }
+    .mini-toggle.on .mini-toggle-thumb { left: 18px; }
 
-    .mini-toggle {
-      width: 32px; height: 16px; background: #444;
-      border-radius: 8px; position: relative; cursor: pointer; flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .mini-toggle-thumb {
-      position: absolute; left: 2px; top: 2px;
-      width: 12px; height: 12px; background: #fff;
-      border-radius: 50%; transition: all 0.2s;
-    }
-
-    .channel-input-area {
-      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px; padding: 10px;
-    }
+    .channel-input-area { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 10px; }
     .input-row { display: flex; gap: 8px; margin-bottom: 10px; }
-
-    .text-input {
-      flex: 1; background: #000; border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 12px;
-      outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s;
-    }
+    .text-input { flex: 1; background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 12px; outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s; }
     .text-input:focus { border-color: rgba(255,0,0,0.5); }
     .text-input::placeholder { color: #444; }
-
-    .add-btn {
-      background: #FF0000; color: #fff; border: none; padding: 8px 16px;
-      border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
-      letter-spacing: 0.05em; font-family: 'Inter', sans-serif; transition: filter 0.15s;
-    }
+    .add-btn { background: #FF0000; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 0.05em; font-family: 'Inter', sans-serif; transition: filter 0.15s; }
     .add-btn:hover { filter: brightness(1.1); }
 
-    .channel-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px; border-radius: 6px; transition: background 0.15s; margin-bottom: 2px;
-    }
+    .channel-row { display: flex; align-items: center; justify-content: space-between; padding: 8px; border-radius: 6px; transition: background 0.15s; margin-bottom: 2px; }
     .channel-row:hover { background: rgba(255,255,255,0.04); }
     .channel-info { display: flex; align-items: center; gap: 10px; }
-    .channel-avatar {
-      width: 28px; height: 28px; border-radius: 50%; background: #333;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; color: #888; font-weight: 700;
-    }
+    .channel-avatar { width: 28px; height: 28px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #888; font-weight: 700; }
     .channel-name { font-size: 12px; color: #ccc; }
-    .delete-btn {
-      background: none; border: none; cursor: pointer; color: #555;
-      display: flex; align-items: center; transition: color 0.15s; padding: 4px; border-radius: 4px;
-    }
+    .delete-btn { background: none; border: none; cursor: pointer; color: #555; display: flex; align-items: center; transition: color 0.15s; padding: 4px; border-radius: 4px; }
     .delete-btn:hover { color: #ff4444; }
 
-    .preview-video {
-      aspect-ratio: 16/9; border-radius: 8px; background: #000;
-      position: relative; overflow: hidden; max-height: 160px;
-    }
+    .preview-video { aspect-ratio: 16/9; border-radius: 8px; background: #000; position: relative; overflow: hidden; max-height: 160px; }
     .preview-video-bg { position: absolute; inset: 0; background: linear-gradient(135deg,#1a0808,#000 60%,#0a0a14); }
     .preview-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-    .preview-icon-circle {
-      width: 52px; height: 52px; background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    }
+    .preview-icon-circle { width: 52px; height: 52px; background: rgba(255,255,255,0.07); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     .preview-icon-circle .material-symbols-outlined { font-size: 28px; color: #fff; }
 
-    .preview-badge {
-      position: absolute; top: 10px; left: 10px;
-      display: flex; align-items: center; gap: 6px;
-      background: rgba(20,20,20,0.85); backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 5px 10px;
-    }
+    .preview-badge { position: absolute; top: 10px; left: 10px; display: flex; align-items: center; gap: 6px; background: rgba(20,20,20,0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 5px 10px; }
     .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #FF0000; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .preview-badge-text { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #fff; text-transform: uppercase; }
 
-    .toast {
-      position: fixed; bottom: 20px; right: 20px;
-      background: rgba(39,39,39,0.95); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px; padding: 10px 16px; font-size: 12px; color: #fff;
-      backdrop-filter: blur(20px); opacity: 0; transform: translateY(8px);
-      transition: all 0.3s; pointer-events: none;
-    }
+    /* SHORTCUTS REFERENCE TABLE */
+    .shortcut-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .shortcut-table td { padding: 8px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .shortcut-table td:first-child { color: #ccc; }
+    .shortcut-table td:last-child { text-align: right; }
+    .shortcut-table tr:last-child td { border-bottom: none; }
+
+    .toast { position: fixed; bottom: 20px; right: 20px; background: rgba(39,39,39,0.95); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px 16px; font-size: 12px; color: #fff; backdrop-filter: blur(20px); opacity: 0; transform: translateY(8px); transition: all 0.3s; pointer-events: none; }
     .toast.show { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">Rotate Pro</div>
     <div class="sidebar-version">V1.2.0</div>
     <nav class="sidebar-nav">
-      <button class="nav-item"><span class="material-symbols-outlined">screen_rotation</span><span>Rotation</span></button>
-      <button class="nav-item"><span class="material-symbols-outlined">keyboard</span><span>Shortcuts</span></button>
-      <button class="nav-item active"><span class="material-symbols-outlined">settings_suggest</span><span>Behavior</span></button>
-      <button class="nav-item"><span class="material-symbols-outlined">school</span><span>Tutorial</span></button>
+      <button class="nav-item" id="nav-rotation"><span class="material-symbols-outlined">screen_rotation</span><span>Rotation</span></button>
+      <button class="nav-item" id="nav-shortcuts"><span class="material-symbols-outlined">keyboard</span><span>Shortcuts</span></button>
+      <button class="nav-item active" id="nav-behavior"><span class="material-symbols-outlined">settings_suggest</span><span>Behavior</span></button>
+      <button class="nav-item" id="nav-tutorial"><span class="material-symbols-outlined">school</span><span>Tutorial</span></button>
     </nav>
   </aside>
 
+  <!-- MAIN -->
   <div class="main-content">
     <div class="topbar">
       <span class="topbar-title">YouTube Rotate Pro</span>
       <div class="topbar-actions">
-        <button class="icon-btn"><span class="material-symbols-outlined" style="font-size:20px;">help_outline</span></button>
-        <button class="icon-btn"><span class="material-symbols-outlined" style="font-size:20px;">settings</span></button>
+        <button class="icon-btn" id="topHelpBtn" title="Help"><span class="material-symbols-outlined" style="font-size:20px;">help_outline</span></button>
+        <button class="icon-btn" id="topSettingsBtn" title="Settings"><span class="material-symbols-outlined" style="font-size:20px;">settings</span></button>
       </div>
     </div>
 
@@ -258,9 +177,13 @@
             </div>
             <span class="badge">HOTKEYS</span>
           </div>
-          <div class="shortcut-row"><span class="shortcut-name">Rotate Clockwise</span><kbd class="active-key">ALT + R</kbd></div>
-          <div class="shortcut-row"><span class="shortcut-name">Flip Horizontal</span><kbd>ALT + H</kbd></div>
-          <div class="shortcut-row"><span class="shortcut-name">Reset Alignment</span><kbd>ALT + SHIFT + R</kbd></div>
+          <table class="shortcut-table">
+            <tr><td>Rotate 90° Clockwise</td><td><kbd class="active-key">ALT + R</kbd></td></tr>
+            <tr><td>Flip Horizontal</td><td><kbd>ALT + H</kbd></td></tr>
+            <tr><td>Reset All</td><td><kbd>ALT + SHIFT + R</kbd></td></tr>
+            <tr><td>Fine +1°</td><td><kbd>ALT + ↑</kbd></td></tr>
+            <tr><td>Fine −1°</td><td><kbd>ALT + ↓</kbd></td></tr>
+          </table>
           <button class="outline-btn" id="editShortcutsBtn">Edit All Shortcuts</button>
         </div>
 
@@ -278,7 +201,7 @@
           <input type="range" min="0" max="100" value="85" id="opacitySlider"/>
           <span class="position-label">Control Position</span>
           <div class="position-grid">
-            <button class="pos-btn active">Top Left</button>
+            <button class="pos-btn active">Top Right</button>
             <button class="pos-btn inactive">Bottom Right</button>
           </div>
         </div>
@@ -292,14 +215,14 @@
             </div>
             <div class="toggle-row">
               <span class="toggle-label">Auto-rotate for specified channels</span>
-              <div class="mini-toggle" id="autoToggle" data-on="false">
+              <div class="mini-toggle" id="autoToggle">
                 <div class="mini-toggle-thumb"></div>
               </div>
             </div>
           </div>
           <div class="channel-input-area">
             <div class="input-row">
-              <input class="text-input" id="channelInput" placeholder="Add YouTube Channel URL..." type="text"/>
+              <input class="text-input" id="channelInput" placeholder="Add YouTube Channel URL or @handle..." type="text"/>
               <button class="add-btn" id="addChannelBtn">ADD</button>
             </div>
             <div id="channelList">
@@ -336,7 +259,7 @@
             </div>
             <div class="preview-badge">
               <div class="pulse-dot"></div>
-              <span class="preview-badge-text">90° Rotation Active</span>
+              <span class="preview-badge-text">Rotation Active</span>
             </div>
           </div>
         </div>

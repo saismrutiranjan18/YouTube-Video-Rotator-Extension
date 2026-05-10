@@ -1,89 +1,87 @@
 /* ============================================================
-   YouTube Rotate Pro — styles.css
-   Injected into youtube.com pages
+   YouTube Rotate Pro — styles.css  v1.2.0
+   Injected into every youtube.com page
    ============================================================ */
 
+/* ── OVERLAY PANEL ───────────────────────────────────────── */
 #yrp-panel {
-  position: fixed;
-  top: 70px;
-  right: 20px;
-  z-index: 2147483647;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 5px;
-  font-family: -apple-system, 'Inter', sans-serif !important;
-  user-select: none;
-  pointer-events: all;
+  position: fixed !important;
+  top: 70px !important;
+  right: 20px !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 5px !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif !important;
+  user-select: none !important;
+  pointer-events: all !important;
 }
 
-/* ── MAIN BAR ─────────────────────────────────────────────── */
+/* ── DRAG BAR ────────────────────────────────────────────── */
 #yrp-drag-handle {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  background: rgba(12, 12, 12, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 10px;
-  padding: 5px 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.04) inset;
-  cursor: grab;
-  transition: border-color 0.2s;
+  display: flex !important;
+  align-items: center !important;
+  background: rgba(10, 10, 10, 0.93) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-radius: 10px !important;
+  padding: 5px 8px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.7) !important;
+  cursor: grab !important;
+  transition: border-color 0.2s !important;
 }
 
-#yrp-drag-handle:active { cursor: grabbing; }
-#yrp-drag-handle:hover  { border-color: rgba(255,0,0,0.3); }
+#yrp-drag-handle:hover { border-color: rgba(255, 0, 0, 0.35) !important; }
+#yrp-drag-handle:active { cursor: grabbing !important; }
 
-/* ── BRAND ────────────────────────────────────────────────── */
+/* ── BRAND ───────────────────────────────────────────────── */
 #yrp-brand {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-right: 10px;
-  cursor: grab;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding-right: 10px !important;
+  cursor: grab !important;
 }
 
 #yrp-icon {
-  color: #FF0000;
-  font-size: 17px;
-  font-weight: 900;
-  line-height: 1;
-  display: block;
+  color: #FF0000 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
 }
 
 #yrp-name {
-  color: #FF0000;
+  color: #FF0000 !important;
   font-size: 10px !important;
   font-weight: 800 !important;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
 }
 
-/* ── DIVIDER ──────────────────────────────────────────────── */
+/* ── DIVIDER ─────────────────────────────────────────────── */
 #yrp-divider {
-  width: 1px;
-  height: 20px;
-  background: rgba(255,255,255,0.1);
-  margin: 0 8px;
-  flex-shrink: 0;
+  width: 1px !important;
+  height: 20px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  margin: 0 8px !important;
+  flex-shrink: 0 !important;
 }
 
-/* ── BUTTONS ROW ──────────────────────────────────────────── */
+/* ── BUTTONS ─────────────────────────────────────────────── */
 #yrp-buttons {
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
 }
 
 .yrp-btn {
+  all: unset !important;
   width: 28px !important;
   height: 28px !important;
   border-radius: 6px !important;
-  background: transparent !important;
-  border: none !important;
   color: #999 !important;
   font-size: 16px !important;
   cursor: pointer !important;
@@ -91,68 +89,64 @@
   align-items: center !important;
   justify-content: center !important;
   transition: background 0.15s, color 0.15s, transform 0.1s !important;
-  line-height: 1 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  outline: none !important;
-  font-family: inherit !important;
+  box-sizing: border-box !important;
 }
 
 .yrp-btn:hover {
-  background: rgba(255,255,255,0.1) !important;
-  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
 }
 
 .yrp-btn:active {
   transform: scale(0.85) !important;
 }
 
-/* Flip active state */
+/* Active (flip toggled on) */
 .yrp-btn.yrp-active {
-  background: rgba(255,0,0,0.15) !important;
+  background: rgba(255, 0, 0, 0.15) !important;
   color: #FF0000 !important;
-  border: 1px solid rgba(255,0,0,0.3) !important;
+  outline: 1px solid rgba(255, 0, 0, 0.3) !important;
 }
 
-/* Reset button hover */
+/* Reset hover */
 #yrp-reset:hover {
-  background: rgba(255,0,0,0.15) !important;
+  background: rgba(255, 0, 0, 0.15) !important;
   color: #FF0000 !important;
 }
 
-/* Hide/close button */
+/* Hide button */
 #yrp-hide {
   color: #555 !important;
   font-size: 20px !important;
+  margin-left: 2px !important;
 }
-
 #yrp-hide:hover {
-  background: rgba(255,255,255,0.07) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
   color: #bbb !important;
 }
 
-/* ── ANGLE BADGE ──────────────────────────────────────────── */
+/* ── ANGLE BADGE ─────────────────────────────────────────── */
 #yrp-badge {
   display: none;
-  background: rgba(255,0,0,0.13);
-  border: 1px solid rgba(255,0,0,0.35);
-  border-radius: 6px;
-  padding: 3px 10px;
+  background: rgba(255, 0, 0, 0.12) !important;
+  border: 1px solid rgba(255, 0, 0, 0.35) !important;
+  border-radius: 6px !important;
+  padding: 3px 10px !important;
   font-size: 11px !important;
   font-weight: 800 !important;
   color: #FF0000 !important;
-  letter-spacing: 0.06em;
-  backdrop-filter: blur(10px);
-  animation: yrp-pop 0.2s ease;
+  letter-spacing: 0.06em !important;
+  backdrop-filter: blur(10px) !important;
   font-family: inherit !important;
+  animation: yrp-pop 0.2s ease !important;
 }
 
 @keyframes yrp-pop {
   from { opacity: 0; transform: translateY(-4px) scale(0.95); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
 }
 
-/* ── VIDEO SMOOTH TRANSITION ──────────────────────────────── */
+/* ── VIDEO SMOOTH TRANSFORM ──────────────────────────────── */
 video {
   transition: transform 0.25s ease !important;
   transform-origin: center center !important;
