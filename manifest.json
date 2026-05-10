@@ -3,7 +3,8 @@
   "name": "YouTube Rotate Pro",
   "version": "1.2.0",
   "description": "Rotate YouTube videos to any angle for comfortable viewing",
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "host_permissions": ["*://*.youtube.com/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rotate Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -26,35 +26,29 @@
       align-items: center;
       justify-content: center;
     }
-
     .fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
 
     .glass {
-      background: rgba(39, 39, 39, 0.8);
+      background: rgba(39,39,39,0.8);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
+    /* HEADER */
     header {
       background: #0F0F0F;
       border-bottom: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 10px 12px;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      position: sticky; top: 0; z-index: 50;
     }
-
     .logo { display: flex; align-items: center; gap: 8px; }
     .logo-icon { color: #FF0000; font-size: 20px; }
     .logo-text { color: #fff; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; }
     .header-actions { display: flex; gap: 2px; }
 
     .icon-btn {
-      width: 30px; height: 30px;
-      border-radius: 50%;
+      width: 30px; height: 30px; border-radius: 50%;
       background: transparent; border: none;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; color: #666;
@@ -62,33 +56,26 @@
     }
     .icon-btn:hover { background: rgba(255,255,255,0.06); color: #aaa; }
 
-    main {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    /* MAIN */
+    main { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
 
     .section-header {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0 2px; margin-bottom: 8px;
     }
-
     .section-label {
       font-size: 10px; font-weight: 700;
       letter-spacing: 0.1em; color: #555; text-transform: uppercase;
     }
 
-    .preset-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-    }
+    /* PRESET GRID */
+    .preset-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
 
     .preset-btn {
       background: rgba(39,39,39,0.8);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 14px 8px;
+      border-radius: 12px; padding: 14px 8px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 4px; cursor: pointer; transition: all 0.15s;
@@ -100,32 +87,27 @@
     .preset-btn.active .material-symbols-outlined { color: #FF0000; }
     .preset-btn.active .deg-label { color: #fff; }
 
+    /* PRECISION */
     .precision-card { border-radius: 12px; padding: 12px; }
-
-    .precision-header {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
-    }
+    .precision-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .precision-title { display: flex; align-items: center; gap: 8px; }
     .precision-title .material-symbols-outlined { font-size: 16px; color: #666; }
-    .precision-title span:last-child { font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #E5E2E1; }
+    .precision-title .title-text { font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #E5E2E1; }
 
     .degree-badge {
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.07);
       border-radius: 4px; padding: 2px 8px;
       font-size: 10px; font-weight: 700; color: #FF0000;
     }
 
     input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%; height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px; cursor: pointer; margin-bottom: 6px;
+      -webkit-appearance: none; width: 100%; height: 4px;
+      background: rgba(255,255,255,0.1); border-radius: 2px;
+      cursor: pointer; margin-bottom: 6px;
     }
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: #FF0000; cursor: pointer;
+      -webkit-appearance: none; width: 12px; height: 12px;
+      border-radius: 50%; background: #FF0000; cursor: pointer;
       box-shadow: 0 0 8px rgba(255,0,0,0.5);
     }
 
@@ -134,6 +116,7 @@
       font-size: 10px; color: #444; font-weight: 700; padding: 0 2px;
     }
 
+    /* AUTO DETECT */
     .auto-card {
       border-radius: 12px; padding: 12px;
       display: flex; align-items: center; justify-content: space-between;
@@ -148,83 +131,74 @@
     .auto-title { font-size: 12px; font-weight: 500; color: #fff; margin-bottom: 2px; }
     .auto-sub { font-size: 10px; color: #555; }
 
-    .toggle-wrap { position: relative; cursor: pointer; }
-
+    .toggle-wrap { cursor: pointer; }
     .toggle-track {
-      width: 36px; height: 20px;
-      background: #FF0000; border-radius: 10px;
-      position: relative; transition: background 0.2s;
+      width: 36px; height: 20px; background: #FF0000;
+      border-radius: 10px; position: relative; transition: background 0.2s;
     }
     .toggle-track.off { background: #444; }
     .toggle-thumb {
       position: absolute; top: 2px; right: 2px;
-      width: 16px; height: 16px;
-      background: #fff; border-radius: 50%;
-      transition: right 0.2s, left 0.2s;
+      width: 16px; height: 16px; background: #fff;
+      border-radius: 50%; transition: right 0.2s, left 0.2s;
     }
     .toggle-track.off .toggle-thumb { right: auto; left: 2px; }
 
-    .preview-card {
-      position: relative; height: 100px;
-      border-radius: 12px; overflow: hidden;
-      background: #111; cursor: pointer;
+    /* APPLY CARD */
+    .apply-card {
+      position: relative; height: 100px; border-radius: 12px;
+      overflow: hidden; background: #111; cursor: pointer; border: none; width: 100%;
     }
-    .preview-bg {
+    .apply-bg {
       position: absolute; inset: 0;
       background: linear-gradient(135deg, #1a0000, #000); opacity: 0.8;
     }
-    .preview-gradient {
+    .apply-gradient {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
     }
-    .preview-content {
+    .apply-content {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;
     }
     .play-btn {
-      width: 36px; height: 36px;
-      background: #FF0000; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 20px rgba(255,0,0,0.4);
-      transition: transform 0.15s;
-      border: none; cursor: pointer;
+      width: 36px; height: 36px; background: #FF0000;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4); transition: transform 0.15s;
     }
-    .preview-card:hover .play-btn { transform: scale(1.1); }
+    .apply-card:hover .play-btn { transform: scale(1.1); }
     .play-btn .material-symbols-outlined { color: #fff; font-size: 20px; }
-    .preview-label {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 0.1em; color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
+    .apply-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5); text-transform: uppercase;
     }
 
+    /* BOTTOM NAV */
     nav {
       display: flex; justify-content: space-around; align-items: center;
       padding: 8px 16px;
-      background: rgba(39,39,39,0.8);
-      backdrop-filter: blur(20px);
+      background: rgba(39,39,39,0.8); backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255,255,255,0.06);
     }
     .nav-item {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 2px;
-      padding: 6px 16px; border-radius: 8px;
-      cursor: pointer; transition: opacity 0.15s;
-      background: none; border: none;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      padding: 6px 16px; border-radius: 8px; cursor: pointer;
+      background: none; border: none; font-family: 'Inter', sans-serif;
+      transition: opacity 0.15s;
     }
     .nav-item:hover { opacity: 0.7; }
     .nav-item.active { background: rgba(255,0,0,0.1); }
     .nav-item .material-symbols-outlined { font-size: 22px; }
-    .nav-item.active .material-symbols-outlined { color: #fff; }
+    .nav-item.active  .material-symbols-outlined { color: #fff; }
     .nav-item:not(.active) .material-symbols-outlined { color: #555; }
     .nav-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-    .nav-item.active .nav-label { color: #fff; }
+    .nav-item.active  .nav-label { color: #fff; }
     .nav-item:not(.active) .nav-label { color: #555; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="logo">
       <span class="material-symbols-outlined logo-icon">screen_rotation</span>
@@ -240,16 +214,14 @@
     </div>
   </header>
 
-  <!-- MAIN -->
   <main>
 
-    <!-- Quick Rotation -->
     <section>
       <div class="section-header">
         <span class="section-label">Quick Rotation</span>
         <span class="section-label" style="color:#444;">PRESETS</span>
       </div>
-      <div class="preset-grid" id="presetGrid">
+      <div class="preset-grid">
         <button class="preset-btn" data-angle="90">
           <span class="material-symbols-outlined">rotate_90_degrees_cw</span>
           <span class="deg-label">90°</span>
@@ -265,12 +237,11 @@
       </div>
     </section>
 
-    <!-- Precision Control -->
     <section class="glass precision-card">
       <div class="precision-header">
         <div class="precision-title">
           <span class="material-symbols-outlined">tune</span>
-          <span>Precision Control</span>
+          <span class="title-text">Precision Control</span>
         </div>
         <div class="degree-badge" id="degreeDisplay">0°</div>
       </div>
@@ -280,7 +251,6 @@
       </div>
     </section>
 
-    <!-- Auto Detect -->
     <section class="glass auto-card">
       <div class="auto-left">
         <div class="auto-icon-wrap">
@@ -298,21 +268,19 @@
       </div>
     </section>
 
-    <!-- Apply / Live Preview -->
-    <section class="preview-card" id="applyBtn">
-      <div class="preview-bg"></div>
-      <div class="preview-gradient"></div>
-      <div class="preview-content">
-        <button class="play-btn">
+    <button class="apply-card" id="applyBtn">
+      <div class="apply-bg"></div>
+      <div class="apply-gradient"></div>
+      <div class="apply-content">
+        <div class="play-btn">
           <span class="material-symbols-outlined fill">play_arrow</span>
-        </button>
-        <span class="preview-label">Apply to YouTube</span>
+        </div>
+        <span class="apply-label">Apply to YouTube</span>
       </div>
-    </section>
+    </button>
 
   </main>
 
-  <!-- BOTTOM NAV -->
   <nav>
     <button class="nav-item active" id="navRotate">
       <span class="material-symbols-outlined">crop_rotate</span>
@@ -328,8 +296,6 @@
     </button>
   </nav>
 
-  <!-- ✅ External JS file — NO inline scripts -->
   <script src="popup.js"></script>
-
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rotate Pro — Settings</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -10,37 +10,23 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #0F0F0F;
-      color: #E5E2E1;
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      display: flex;
+      background: #0F0F0F; color: #E5E2E1;
+      font-family: 'Inter', sans-serif; min-height: 100vh; display: flex;
     }
 
     .material-symbols-outlined {
       font-family: 'Material Symbols Outlined';
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      font-size: 20px;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
+      font-size: 20px; line-height: 1; display: inline-flex; align-items: center;
     }
 
-    .glass {
-      background: rgba(39,39,39,0.8);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
+    .glass { background: rgba(39,39,39,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
 
     /* SIDEBAR */
     .sidebar {
-      width: 220px;
-      background: #1A1A1A;
+      width: 220px; background: #1A1A1A;
       border-right: 1px solid rgba(255,255,255,0.07);
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      min-height: 100vh;
+      display: flex; flex-direction: column; flex-shrink: 0; min-height: 100vh;
     }
     .sidebar-logo { padding: 20px 16px 4px; color: #FF0000; font-weight: 900; font-size: 18px; letter-spacing: -0.02em; }
     .sidebar-version { padding: 4px 16px 20px; color: #555; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; }
@@ -48,13 +34,10 @@
 
     .nav-item {
       display: flex; align-items: center; gap: 12px;
-      padding: 12px 16px; cursor: pointer;
-      transition: all 0.15s; color: #777;
-      font-size: 12px; font-weight: 500;
-      border-left: 2px solid transparent;
-      background: none; border-right: none; border-top: none; border-bottom: none;
-      width: 100%; text-align: left;
-      font-family: 'Inter', sans-serif;
+      padding: 12px 16px; cursor: pointer; transition: all 0.15s;
+      color: #777; font-size: 12px; font-weight: 500;
+      border: none; border-left: 2px solid transparent;
+      background: none; width: 100%; text-align: left; font-family: 'Inter', sans-serif;
     }
     .nav-item:hover { background: rgba(255,255,255,0.04); color: #ccc; }
     .nav-item.active { background: rgba(255,255,255,0.06); color: #fff; border-left-color: #FF0000; }
@@ -64,18 +47,15 @@
     .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
     .topbar {
-      background: #0F0F0F;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      padding: 10px 16px;
-      display: flex; align-items: center; justify-content: space-between;
+      background: #0F0F0F; border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
     }
     .topbar-title { color: #fff; font-weight: 700; font-size: 14px; }
     .topbar-actions { display: flex; gap: 6px; }
 
     .icon-btn {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: transparent; border: none; cursor: pointer;
-      color: #666; display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none;
+      cursor: pointer; color: #666; display: flex; align-items: center; justify-content: center;
       transition: background 0.15s, color 0.15s;
     }
     .icon-btn:hover { background: rgba(255,255,255,0.06); color: #aaa; }
@@ -91,7 +71,6 @@
 
     .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .bento-full { grid-column: 1 / -1; }
-
     .card { border-radius: 12px; padding: 14px; }
 
     .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -100,9 +79,8 @@
     .card-title { font-size: 12px; font-weight: 600; color: #fff; }
 
     .badge {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
-      color: #FF0000; background: rgba(255,0,0,0.1);
-      padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: #FF0000;
+      background: rgba(255,0,0,0.1); padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
     }
 
     .shortcut-row {
@@ -113,9 +91,8 @@
     .shortcut-name { font-size: 12px; color: #ccc; }
 
     kbd {
-      padding: 3px 7px; background: #000;
-      border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 3px 7px; background: #000; border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
       font-family: 'Inter', monospace; color: #aaa;
     }
     kbd.active-key { color: #FF0000; border-color: rgba(255,0,0,0.3); }
@@ -124,7 +101,7 @@
       width: 100%; margin-top: 10px; padding: 8px;
       border: 1px solid rgba(255,255,255,0.1); background: transparent;
       color: #aaa; border-radius: 8px; font-size: 11px; font-weight: 500;
-      cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s, color 0.15s;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s;
     }
     .outline-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
 
@@ -137,13 +114,11 @@
 
     input[type="range"] {
       -webkit-appearance: none; width: 100%; height: 4px;
-      background: rgba(255,255,255,0.1); border-radius: 2px;
-      cursor: pointer; margin-bottom: 14px;
+      background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer; margin-bottom: 14px;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; width: 12px; height: 12px;
-      border-radius: 50%; background: #FF0000; cursor: pointer;
-      box-shadow: 0 0 6px rgba(255,0,0,0.4);
+      border-radius: 50%; background: #FF0000; cursor: pointer; box-shadow: 0 0 6px rgba(255,0,0,0.4);
     }
 
     .position-label { font-size: 11px; color: #888; display: block; margin-bottom: 6px; }
@@ -164,6 +139,7 @@
     .mini-toggle {
       width: 32px; height: 16px; background: #444;
       border-radius: 8px; position: relative; cursor: pointer; flex-shrink: 0;
+      transition: background 0.2s;
     }
     .mini-toggle-thumb {
       position: absolute; left: 2px; top: 2px;
@@ -172,27 +148,23 @@
     }
 
     .channel-input-area {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06);
       border-radius: 8px; padding: 10px;
     }
     .input-row { display: flex; gap: 8px; margin-bottom: 10px; }
 
     .text-input {
-      flex: 1; background: #000;
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
-      padding: 8px 12px; color: #fff; font-size: 12px; outline: none;
-      font-family: 'Inter', sans-serif; transition: border-color 0.15s;
+      flex: 1; background: #000; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 12px;
+      outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s;
     }
     .text-input:focus { border-color: rgba(255,0,0,0.5); }
     .text-input::placeholder { color: #444; }
 
     .add-btn {
-      background: #FF0000; color: #fff; border: none;
-      padding: 8px 16px; border-radius: 8px;
-      font-size: 11px; font-weight: 700; cursor: pointer;
-      letter-spacing: 0.05em; font-family: 'Inter', sans-serif;
-      transition: filter 0.15s;
+      background: #FF0000; color: #fff; border: none; padding: 8px 16px;
+      border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
+      letter-spacing: 0.05em; font-family: 'Inter', sans-serif; transition: filter 0.15s;
     }
     .add-btn:hover { filter: brightness(1.1); }
 
@@ -203,8 +175,8 @@
     .channel-row:hover { background: rgba(255,255,255,0.04); }
     .channel-info { display: flex; align-items: center; gap: 10px; }
     .channel-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: #333; display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%; background: #333;
+      display: flex; align-items: center; justify-content: center;
       font-size: 10px; color: #888; font-weight: 700;
     }
     .channel-name { font-size: 12px; color: #ccc; }
@@ -218,13 +190,12 @@
       aspect-ratio: 16/9; border-radius: 8px; background: #000;
       position: relative; overflow: hidden; max-height: 160px;
     }
-    .preview-video-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1a0808 0%, #000 60%, #0a0a14 100%); }
+    .preview-video-bg { position: absolute; inset: 0; background: linear-gradient(135deg,#1a0808,#000 60%,#0a0a14); }
     .preview-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
     .preview-icon-circle {
-      width: 52px; height: 52px;
-      background: rgba(255,255,255,0.07); backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
     }
     .preview-icon-circle .material-symbols-outlined { font-size: 28px; color: #fff; }
 
@@ -250,33 +221,18 @@
 </head>
 <body>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">Rotate Pro</div>
     <div class="sidebar-version">V1.2.0</div>
     <nav class="sidebar-nav">
-      <button class="nav-item">
-        <span class="material-symbols-outlined">screen_rotation</span>
-        <span>Rotation</span>
-      </button>
-      <button class="nav-item">
-        <span class="material-symbols-outlined">keyboard</span>
-        <span>Shortcuts</span>
-      </button>
-      <button class="nav-item active">
-        <span class="material-symbols-outlined">settings_suggest</span>
-        <span>Behavior</span>
-      </button>
-      <button class="nav-item">
-        <span class="material-symbols-outlined">school</span>
-        <span>Tutorial</span>
-      </button>
+      <button class="nav-item"><span class="material-symbols-outlined">screen_rotation</span><span>Rotation</span></button>
+      <button class="nav-item"><span class="material-symbols-outlined">keyboard</span><span>Shortcuts</span></button>
+      <button class="nav-item active"><span class="material-symbols-outlined">settings_suggest</span><span>Behavior</span></button>
+      <button class="nav-item"><span class="material-symbols-outlined">school</span><span>Tutorial</span></button>
     </nav>
   </aside>
 
-  <!-- MAIN -->
   <div class="main-content">
-
     <div class="topbar">
       <span class="topbar-title">YouTube Rotate Pro</span>
       <div class="topbar-actions">
@@ -302,18 +258,9 @@
             </div>
             <span class="badge">HOTKEYS</span>
           </div>
-          <div class="shortcut-row">
-            <span class="shortcut-name">Rotate Clockwise</span>
-            <kbd class="active-key">ALT + R</kbd>
-          </div>
-          <div class="shortcut-row">
-            <span class="shortcut-name">Flip Horizontal</span>
-            <kbd>ALT + H</kbd>
-          </div>
-          <div class="shortcut-row">
-            <span class="shortcut-name">Reset Alignment</span>
-            <kbd>ALT + SHIFT + R</kbd>
-          </div>
+          <div class="shortcut-row"><span class="shortcut-name">Rotate Clockwise</span><kbd class="active-key">ALT + R</kbd></div>
+          <div class="shortcut-row"><span class="shortcut-name">Flip Horizontal</span><kbd>ALT + H</kbd></div>
+          <div class="shortcut-row"><span class="shortcut-name">Reset Alignment</span><kbd>ALT + SHIFT + R</kbd></div>
           <button class="outline-btn" id="editShortcutsBtn">Edit All Shortcuts</button>
         </div>
 
@@ -327,9 +274,7 @@
             <span class="opacity-label">Overlay Opacity</span>
             <span class="opacity-value" id="opacityVal">85%</span>
           </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="opacityBar" style="width:85%;"></div>
-          </div>
+          <div class="progress-bar"><div class="progress-fill" id="opacityBar" style="width:85%;"></div></div>
           <input type="range" min="0" max="100" value="85" id="opacitySlider"/>
           <span class="position-label">Control Position</span>
           <div class="position-grid">
@@ -363,18 +308,14 @@
                   <div class="channel-avatar">M</div>
                   <span class="channel-name">MKBHD</span>
                 </div>
-                <button class="delete-btn">
-                  <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
-                </button>
+                <button class="delete-btn" title="Remove"><span class="material-symbols-outlined" style="font-size:18px;">delete</span></button>
               </div>
               <div class="channel-row">
                 <div class="channel-info">
                   <div class="channel-avatar">V</div>
                   <span class="channel-name">Verge Science</span>
                 </div>
-                <button class="delete-btn">
-                  <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
-                </button>
+                <button class="delete-btn" title="Remove"><span class="material-symbols-outlined" style="font-size:18px;">delete</span></button>
               </div>
             </div>
           </div>
@@ -405,9 +346,6 @@
   </div>
 
   <div class="toast" id="toast">✓ Saved</div>
-
-  <!-- ✅ External JS — no inline scripts -->
   <script src="options.js"></script>
-
 </body>
 </html>

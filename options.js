@@ -1,8 +1,8 @@
-// options.js — Rotate Pro Settings Page
+// options.js — Rotate Pro Settings
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ── SIDEBAR NAV ────────────────────────────────────────────────
+  // ── SIDEBAR NAV ───────────────────────────────────────────
   document.querySelectorAll('.nav-item').forEach((item) => {
     item.addEventListener('click', () => {
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -10,18 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── OPACITY SLIDER ─────────────────────────────────────────────
-  const opacitySlider = document.getElementById('opacitySlider');
-  if (opacitySlider) {
-    opacitySlider.addEventListener('input', (e) => {
-      const val = e.target.value;
-      document.getElementById('opacityVal').textContent = val + '%';
-      document.getElementById('opacityBar').style.width = val + '%';
-      chrome.storage.local.set({ overlayOpacity: val });
-    });
-  }
+  // ── OPACITY SLIDER ────────────────────────────────────────
+  document.getElementById('opacitySlider').addEventListener('input', (e) => {
+    const val = e.target.value;
+    document.getElementById('opacityVal').textContent = val + '%';
+    document.getElementById('opacityBar').style.width = val + '%';
+    chrome.storage.local.set({ overlayOpacity: parseInt(val) });
+  });
 
-  // ── POSITION BUTTONS ───────────────────────────────────────────
+  // ── POSITION BUTTONS ──────────────────────────────────────
   document.querySelectorAll('.pos-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.pos-btn').forEach(b => {
@@ -34,26 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── AUTO-ROTATE TOGGLE ─────────────────────────────────────────
+  // ── AUTO TOGGLE ───────────────────────────────────────────
   document.getElementById('autoToggle').addEventListener('click', () => {
-    const el = document.getElementById('autoToggle');
-    const isOn = el.dataset.on === 'true';
-    el.dataset.on = !isOn;
-    el.style.background = !isOn ? '#FF0000' : '#444';
+    const el    = document.getElementById('autoToggle');
     const thumb = el.querySelector('.mini-toggle-thumb');
-    thumb.style.right = !isOn ? '2px' : 'auto';
-    thumb.style.left  = !isOn ? 'auto' : '2px';
+    const isOn  = el.dataset.on === 'true';
+
+    el.dataset.on      = String(!isOn);
+    el.style.background = !isOn ? '#FF0000' : '#444';
+    thumb.style.left    = !isOn ? 'auto' : '2px';
+    thumb.style.right   = !isOn ? '2px'  : 'auto';
     chrome.storage.local.set({ autoRotate: !isOn });
   });
 
-  // ── ADD CHANNEL ────────────────────────────────────────────────
+  // ── ADD CHANNEL ───────────────────────────────────────────
   document.getElementById('addChannelBtn').addEventListener('click', addChannel);
-
   document.getElementById('channelInput').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addChannel();
   });
 
-  // ── DELETE CHANNEL (delegated) ─────────────────────────────────
+  // ── DELETE CHANNEL (event delegation) ────────────────────
   document.getElementById('channelList').addEventListener('click', (e) => {
     const btn = e.target.closest('.delete-btn');
     if (btn) {
@@ -62,46 +59,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ── EDIT SHORTCUTS BUTTON ──────────────────────────────────────
+  // ── EDIT SHORTCUTS ────────────────────────────────────────
   document.getElementById('editShortcutsBtn').addEventListener('click', () => {
     chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
   });
 
-  // ── LOAD SAVED SETTINGS ────────────────────────────────────────
-  chrome.storage.local.get(['overlayOpacity', 'controlPosition', 'autoRotate'], (result) => {
-    if (result.overlayOpacity) {
-      document.getElementById('opacityVal').textContent = result.overlayOpacity + '%';
-      document.getElementById('opacityBar').style.width = result.overlayOpacity + '%';
-      document.getElementById('opacitySlider').value = result.overlayOpacity;
+  // ── LOAD SAVED SETTINGS ───────────────────────────────────
+  chrome.storage.local.get(['overlayOpacity', 'controlPosition', 'autoRotate'], (r) => {
+    if (r.overlayOpacity) {
+      document.getElementById('opacityVal').textContent  = r.overlayOpacity + '%';
+      document.getElementById('opacityBar').style.width  = r.overlayOpacity + '%';
+      document.getElementById('opacitySlider').value     = r.overlayOpacity;
     }
-    if (result.controlPosition === 'Bottom Right') {
+    if (r.controlPosition === 'Bottom Right') {
       document.querySelectorAll('.pos-btn').forEach(b => {
-        b.classList.toggle('active', b.textContent.trim() === 'Bottom Right');
-        b.classList.toggle('inactive', b.textContent.trim() !== 'Bottom Right');
+        const match = b.textContent.trim() === 'Bottom Right';
+        b.classList.toggle('active',   match);
+        b.classList.toggle('inactive', !match);
       });
     }
-    if (result.autoRotate) {
-      const el = document.getElementById('autoToggle');
-      el.dataset.on = 'true';
-      el.style.background = '#FF0000';
+    if (r.autoRotate) {
+      const el    = document.getElementById('autoToggle');
       const thumb = el.querySelector('.mini-toggle-thumb');
-      thumb.style.right = '2px';
-      thumb.style.left = 'auto';
+      el.dataset.on      = 'true';
+      el.style.background = '#FF0000';
+      thumb.style.right  = '2px';
+      thumb.style.left   = 'auto';
     }
   });
 
 });
 
-// ── HELPERS ────────────────────────────────────────────────────────
+// ── HELPERS ──────────────────────────────────────────────────
 
 function addChannel() {
   const input = document.getElementById('channelInput');
-  const val = input.value.trim();
+  const val   = input.value.trim();
   if (!val) return;
 
-  const name = val.includes('youtube.com/@')
-    ? val.split('@')[1] || val
-    : val;
+  const name    = val.includes('@') ? val.split('@').pop().split('/')[0] : val;
   const initial = name.charAt(0).toUpperCase();
 
   const row = document.createElement('div');
@@ -111,7 +107,7 @@ function addChannel() {
       <div class="channel-avatar">${initial}</div>
       <span class="channel-name">${name}</span>
     </div>
-    <button class="delete-btn">
+    <button class="delete-btn" title="Remove">
       <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
     </button>
   `;
@@ -121,8 +117,8 @@ function addChannel() {
 }
 
 function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = '✓ ' + msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }

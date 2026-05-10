@@ -1,169 +1,159 @@
 /* ============================================================
-   YouTube Rotate Pro — Overlay Styles (injected on youtube.com)
+   YouTube Rotate Pro — styles.css
+   Injected into youtube.com pages
    ============================================================ */
 
-/* ─── OVERLAY PANEL ─────────────────────────────────────────── */
-#yt-rotate-pro-overlay {
+#yrp-panel {
   position: fixed;
-  top: 80px;
+  top: 70px;
   right: 20px;
-  z-index: 9999999;
+  z-index: 2147483647;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  gap: 5px;
+  font-family: -apple-system, 'Inter', sans-serif !important;
   user-select: none;
+  pointer-events: all;
 }
 
-/* ─── MAIN BAR ───────────────────────────────────────────────── */
-#yrp-bar {
+/* ── MAIN BAR ─────────────────────────────────────────────── */
+#yrp-drag-handle {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(15, 15, 15, 0.88);
+  gap: 0;
+  background: rgba(12, 12, 12, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 10px;
-  padding: 6px 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  padding: 5px 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.04) inset;
   cursor: grab;
   transition: border-color 0.2s;
 }
 
-#yrp-bar:hover {
-  border-color: rgba(255, 0, 0, 0.25);
-}
+#yrp-drag-handle:active { cursor: grabbing; }
+#yrp-drag-handle:hover  { border-color: rgba(255,0,0,0.3); }
 
-/* ─── LOGO SECTION ───────────────────────────────────────────── */
-#yrp-logo {
+/* ── BRAND ────────────────────────────────────────────────── */
+#yrp-brand {
   display: flex;
   align-items: center;
   gap: 6px;
   padding-right: 10px;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
   cursor: grab;
 }
 
-.yrp-icon {
+#yrp-icon {
   color: #FF0000;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 900;
   line-height: 1;
+  display: block;
 }
 
-#yrp-label {
+#yrp-name {
   color: #FF0000;
-  font-size: 10px;
-  font-weight: 800;
+  font-size: 10px !important;
+  font-weight: 800 !important;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* ─── CONTROLS ROW ───────────────────────────────────────────── */
-#yrp-controls {
+/* ── DIVIDER ──────────────────────────────────────────────── */
+#yrp-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+
+/* ── BUTTONS ROW ──────────────────────────────────────────── */
+#yrp-buttons {
   display: flex;
   align-items: center;
   gap: 2px;
 }
 
-/* ─── BUTTONS ────────────────────────────────────────────────── */
 .yrp-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: transparent;
-  border: none;
-  color: #aaa;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, color 0.15s, transform 0.1s;
-  line-height: 1;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #999 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s, color 0.15s, transform 0.1s !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+  font-family: inherit !important;
 }
 
 .yrp-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(255,255,255,0.1) !important;
+  color: #fff !important;
 }
 
 .yrp-btn:active {
-  transform: scale(0.88);
+  transform: scale(0.85) !important;
 }
 
-/* Active state (flip toggled on) */
+/* Flip active state */
 .yrp-btn.yrp-active {
-  background: rgba(255, 0, 0, 0.15);
-  color: #FF0000;
-  border: 1px solid rgba(255, 0, 0, 0.3);
+  background: rgba(255,0,0,0.15) !important;
+  color: #FF0000 !important;
+  border: 1px solid rgba(255,0,0,0.3) !important;
 }
 
-/* Reset button – red on hover */
+/* Reset button hover */
 #yrp-reset:hover {
-  background: rgba(255, 0, 0, 0.12);
-  color: #FF0000;
+  background: rgba(255,0,0,0.15) !important;
+  color: #FF0000 !important;
 }
 
-/* Close button */
-#yrp-close {
-  font-size: 18px;
-  color: #555;
-  margin-left: 2px;
+/* Hide/close button */
+#yrp-hide {
+  color: #555 !important;
+  font-size: 20px !important;
 }
 
-#yrp-close:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #aaa;
+#yrp-hide:hover {
+  background: rgba(255,255,255,0.07) !important;
+  color: #bbb !important;
 }
 
-/* ─── ANGLE BADGE ────────────────────────────────────────────── */
-#yrp-angle-badge {
+/* ── ANGLE BADGE ──────────────────────────────────────────── */
+#yrp-badge {
   display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 0, 0, 0.12);
-  border: 1px solid rgba(255, 0, 0, 0.3);
+  background: rgba(255,0,0,0.13);
+  border: 1px solid rgba(255,0,0,0.35);
   border-radius: 6px;
   padding: 3px 10px;
-  font-size: 11px;
-  font-weight: 800;
-  color: #FF0000;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  color: #FF0000 !important;
   letter-spacing: 0.06em;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  animation: yrp-fadein 0.2s ease;
+  animation: yrp-pop 0.2s ease;
+  font-family: inherit !important;
 }
 
-@keyframes yrp-fadein {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes yrp-pop {
+  from { opacity: 0; transform: translateY(-4px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
-/* ─── VIDEO SMOOTH TRANSFORM ─────────────────────────────────── */
-.html5-main-video,
+/* ── VIDEO SMOOTH TRANSITION ──────────────────────────────── */
 video {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: transform 0.25s ease !important;
   transform-origin: center center !important;
-}
-
-/* ─── SCROLLBAR (options page) ───────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
